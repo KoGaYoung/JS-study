@@ -13,7 +13,7 @@ Javscript &amp;&amp; React.JS study
 
 [6.빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
 
-[7.클로저]
+[7.클로저](https://github.com/KoGaYoung/JS-study/blob/main/%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
 [8. 디바운스와 스로틀링]
 
