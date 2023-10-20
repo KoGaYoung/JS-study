@@ -18,6 +18,7 @@ let person1 = new Person('ko', 'gayoung', 25)
 
 // person1의 __proto__속성은 원형 부모의 prototype 참조
 // [[prototype]]인 prototype 객체 내부에는 인스턴스가 사용할 메소드가 저장되어있다.
+// constructor는 Person 함수를 가리킨다.
 ~~~
 ~~~
 (아래 이미지 참고)js의 모든 객체는 프로토타입이라는 프로퍼티를 갖고있으며 프로토타입 체인(prototype chain)입니다.
