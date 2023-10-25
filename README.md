@@ -5,7 +5,7 @@ Javscript &amp;&amp; React.JS study
 
 [2.원시타입, 참조타입 그리고 불변성](https://github.com/KoGaYoung/JS-study/blob/main/%EC%9B%90%EC%8B%9C%ED%83%80%EC%9E%85_%EC%B0%B8%EC%A1%B0%ED%83%80%EC%9E%85%EA%B3%BC%20%EB%B6%88%EB%B3%80%EC%84%B1(Immutable).md)
 
-[3.콜스택과 이벤트루프](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%EC%BB%A8%ED%83%9D%EC%8A%A4%ED%8A%B8%EC%99%80%20%EC%BD%9C%EC%8A%A4%ED%83%9D.md)
+[3.콜스택과 이벤트루프](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BD%9C%EC%8A%A4%ED%83%9D%EA%B3%BC%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%EB%A3%A8%ED%94%84.md)
 
 [4.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
