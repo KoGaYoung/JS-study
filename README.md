@@ -7,7 +7,7 @@ Javscript &amp;&amp; React.JS study
 
 [3.콜스택과 이벤트루프](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BD%9C%EC%8A%A4%ED%83%9D%EA%B3%BC%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%EB%A3%A8%ED%94%84.md)
 
-[4.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%ED%81%B4%EB%A1%9C%EC%A0%80.md)
+[4.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%99%80%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
 [5.호이스팅과 활용](https://github.com/KoGaYoung/JS-study/blob/main/%ED%98%B8%EC%9D%B4%EC%8A%A4%ED%8C%85(hoisting).md)
 
