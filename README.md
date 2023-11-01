@@ -27,7 +27,7 @@ Javscript &amp;&amp; React.JS study
 
 [2. 모놀리식, 멀티레포, 모노레포] ()
 
-[3. 브라우저 구조 및 동작 원리 이해]
+[3. 브라우저 구조 및 동작 원리 이해](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EA%B5%AC%EC%A1%B0%20%EB%B0%8F%20%EB%8F%99%EC%9E%91%20%EC%9B%90%EB%A6%AC%20%EC%9D%B4%ED%95%B4.md)
 
 [4. 개발자도구]
 
