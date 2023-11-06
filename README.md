@@ -11,7 +11,7 @@ Javscript &amp;&amp; React.JS study
 
 [5.호이스팅과 활용](https://github.com/KoGaYoung/JS-study/blob/main/%ED%98%B8%EC%9D%B4%EC%8A%A4%ED%8C%85(hoisting).md)
 
-[6.캡처링과 버블링] ()
+[6.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
 [7. 디바운스와 스로틀링]
 
