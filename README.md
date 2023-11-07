@@ -13,14 +13,14 @@ Javscript &amp;&amp; React.JS study
 
 [6.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
-[7. 디바운스와 스로틀링]
 
 # TS
 [1. 인터페이스, 타입 선언]
 
 [2. 제너릭타입]
 
-<!-- https://kyounghwan01.github.io/blog/React/common-component/#header -->
+[3. ts-pattern]
+
 
 # Web study
 [1. 패키지매니저] ()
@@ -42,6 +42,9 @@ Javscript &amp;&amp; React.JS study
 [3. 웹팩과 바벨]()
 
 [5.리덕스와 덕스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%99%80%20%EB%8D%95%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
+
+[7. 디바운스와 스로틀링]
+
 
 [6.빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
 
