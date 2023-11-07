@@ -1,5 +1,5 @@
 # JS-study
-Javscript &amp;&amp; React.JS study
+Javscript 
 
 [1.프로토타입이란?](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85(Prototype).md)
 
@@ -13,13 +13,13 @@ Javscript &amp;&amp; React.JS study
 
 [6.모듈패턴 네임스페이스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%AA%A8%EB%93%88%ED%8C%A8%ED%84%B4%20%EB%84%A4%EC%9E%84%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
 
-[7.디자인패턴]()
+[7.디자인패턴] ()
 
-[8.함수형 프로그래밍]()
+[8.함수형 프로그래밍] ()
 
 [9.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
-[10.알고리즘]()
+[10.알고리즘] ()
 
 
 # TS
@@ -33,29 +33,29 @@ Javscript &amp;&amp; React.JS study
 # Web study
 [1. 패키지매니저](https://github.com/KoGaYoung/JS-study/blob/main/%ED%8C%A8%ED%82%A4%EC%A7%80%EB%A7%A4%EB%8B%88%EC%A0%80.md)
 
-[2. 모놀리식, 멀티레포, 모노레포]()
+[2. 모놀리식, 멀티레포, 모노레포] ()
 
 [3. 브라우저 구조 및 동작 원리 이해](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EA%B5%AC%EC%A1%B0%20%EB%B0%8F%20%EB%8F%99%EC%9E%91%20%EC%9B%90%EB%A6%AC%20%EC%9D%B4%ED%95%B4.md)
 
-[4. CORS]()
+[4. CORS] ()
 
-[5. 개발자도구 활용]
+[5.Restful api, graphQK] ()
 
-[6.Restful api, graphQK]
+[6. 브라우저 스토리지]
 
-[7. 웹팩과 바벨]()
+[7. 개발자도구 활용] ()
 
-[8. eslint 적용]
+[8. 웹팩과 바벨] ()
 
-[8. 디바운스와 스로틀링]
+[9. eslint 적용] ()
 
-[9.
+[10. 디바운스와 스로틀링]
 
-[9.리액트의 공통컴포넌트(디자인시스템)]
+[11.리액트의 공통컴포넌트(디자인시스템)]
 
-[6.빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
+[12.빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
 
-[2.브라우저라우터와 해시라우터](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A7%95%EB%9D%BC%EC%9A%B0%ED%84%B0%EC%99%80%20%ED%95%B4%EC%8B%9C%EB%9D%BC%EC%9A%B0%ED%84%B0.md)
+[13.브라우저라우터와 해시라우터](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A7%95%EB%9D%BC%EC%9A%B0%ED%84%B0%EC%99%80%20%ED%95%B4%EC%8B%9C%EB%9D%BC%EC%9A%B0%ED%84%B0.md)
 
-[5.리덕스와 덕스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%99%80%20%EB%8D%95%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
+[14.리덕스와 덕스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%99%80%20%EB%8D%95%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
 
