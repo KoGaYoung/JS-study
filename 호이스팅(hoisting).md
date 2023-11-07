@@ -25,8 +25,9 @@ function foo() {                            function foo() {
 함수와 변수 모두 선언문일 때만 초기화가 된다
 ~~~
 ~~~java script
-//함수 표현식(Function express)                   // 함수 선언식(Function declaration)      // 함수 선언시 실제 실행문맥(컨택스트)
-d();	// ERROR, undefined는 호출할 수 없기 때문에    j();                                   function j () {
+//함수 표현식(Function express)                   // 함수 선언식(Function declaration)  --> // 함수 선언식의 실제 실행문맥(컨택스트)
+// ERROR, undefined는 호출할 수 없기 때문에
+d();	                                       j();                                   function j () {
                                                                                            console.log('j');
 var d = function () {                          function j () {                         }
 	console.log('I am inside function d');           console.log('j');                   
