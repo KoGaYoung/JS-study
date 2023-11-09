@@ -58,6 +58,22 @@ prototype 속성: 함수객체에만 존재하는 프로퍼티로, 함수 객체
 
 # 프로토타입 사용 예시
 
+~~~javascript
+// 모든 객체는 Object.prototype를 상속받기 때문에 toString, hasOwnProperty 를 사용가능
+
+// 모든 배열은 Array.Prototype을 상속받기 때문에 map, filter, reduce 같은 배열메소드에 접근가능
+const exampleRef = document.getElementsByClassName('li');
+Array.prototype.map.call(exampleRef, (e) => {...});
+
+// 메소드 상속 또는 확장 -> 모든 배열 인스턴스가 이 메소드를 사용할 수 있음 (필요에 따라 메모리 절약됨)
+Array.prototype.getFrist = function () {
+  return this[0];
+}
+const array1 = [1,2,3];
+console.log(array1.getFrist());
+
+// 
+~~~
 
 
 ~~~javascript
