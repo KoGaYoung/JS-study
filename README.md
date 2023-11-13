@@ -15,7 +15,7 @@ Javscript
 
 [7.디자인패턴] ()
 
-[8.함수형 프로그래밍] ()
+[8.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)
 
 [9.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
