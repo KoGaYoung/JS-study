@@ -19,7 +19,7 @@ Javscript
 
 [9.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
-[10. 프록시](https://github.com/KoGaYoung/JS-study/tree/main)
+[10. 프록시]([https://github.com/KoGaYoung/JS-study/tree/main](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9D%EC%8B%9C.md))
 
 [11.알고리즘] ()
 
