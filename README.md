@@ -43,7 +43,7 @@ Javscript
 
 [5.Restful api, graphQK] ()
 
-[6. 브라우저 스토리지]
+[6. 브라우저 스토리지](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
 
 [7. 개발자도구 활용] ()
 
