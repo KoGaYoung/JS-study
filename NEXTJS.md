@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async() => {
 ~~~
 
 ## SSG(static side generation)
-~~~
+~~~javascript
 export default SSGPage = ({dateTime) : SSRPageProps) => {
   return (
     <main>
@@ -85,7 +85,7 @@ export const getStaticSideProps: GetStaticSideProps = async() => {
 ~~~
 
 ## ISR (Incremental static rendering) SSG랑 비슷한데 일정 시간 지나면 새로 랜더링(=업데이트)
-~~~
+~~~javascript
 export default ISR20Page = ({dateTime) : ISR20PageProps) => {
   return (
     <main>
