@@ -51,7 +51,7 @@ Javscript
 
 [9. eslint 적용] ()
 
-[10. 디바운스와 스로틀링]
+[10. 디바운스와 스로틀링](https://github.com/KoGaYoung/JS-study/blob/main/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8A%A4%EC%99%80%20%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81.md)
 
 [11.리액트의 공통컴포넌트(디자인시스템)]
 
