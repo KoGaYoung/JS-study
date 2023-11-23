@@ -49,7 +49,7 @@ Javscript
 
 [8. 웹팩과 바벨] ()
 
-[9. eslint 적용] ()
+[9. eslint 적용](https://github.com/KoGaYoung/JS-study/blob/main/eslint%20%EC%A0%81%EC%9A%A9.md)
 
 [10. 디바운스와 스로틀링](https://github.com/KoGaYoung/JS-study/blob/main/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8A%A4%EC%99%80%20%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81.md)
 
