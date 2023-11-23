@@ -11,7 +11,7 @@ Javscript
 
 [5.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%99%80%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
-[6.모듈패턴 네임스페이스패턴] (https://github.com/KoGaYoung/JS-study/blob/main/%EB%AA%A8%EB%93%88%ED%8C%A8%ED%84%B4%20%EB%84%A4%EC%9E%84%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
+[6.모듈패턴 네임스페이스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%AA%A8%EB%93%88%ED%8C%A8%ED%84%B4%20%EB%84%A4%EC%9E%84%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
 
 [7.디자인패턴] ()
 
