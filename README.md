@@ -23,14 +23,7 @@ Javscript
 
 [11.알고리즘] ()
 
-
-# TS
-[1. 인터페이스, 타입 선언]
-
-[2. 제너릭타입]
-
-[3. ts-pattern]
-
+---
 
 # Web study
 [1. 패키지매니저](https://github.com/KoGaYoung/JS-study/blob/main/%ED%8C%A8%ED%82%A4%EC%A7%80%EB%A7%A4%EB%8B%88%EC%A0%80.md)
