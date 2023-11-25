@@ -1,5 +1,4 @@
 # JS-study
-Javscript 
 
 [1.프로토타입이란?](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85(Prototype).md)
 
@@ -11,17 +10,21 @@ Javscript
 
 [5.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%99%80%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
-[6.모듈패턴 네임스페이스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%AA%A8%EB%93%88%ED%8C%A8%ED%84%B4%20%EB%84%A4%EC%9E%84%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
+[6.모듈패턴 네임스페이스패턴] ()
 
 [7.디자인패턴] ()
 
-[8.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)
+[8.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
 
 [9.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
 [10. 프록시](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9D%EC%8B%9C.md)
 
-[11.알고리즘] ()
+[11.모듈 시스템 (CommonJS, ES6 Modules)] ()
+
+[12. 배열과 객체의 조작 방법] ()
+
+[13. ES5_TO_ES6] ()
 
 ---
 
@@ -34,11 +37,11 @@ Javscript
 
 [4. CORS](https://github.com/KoGaYoung/JS-study/blob/main/CORS.md)
 
-[5.Restful api, graphQK] ()
+[5.Restful api, graphQL] ()
 
 [6. 브라우저 스토리지](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
 
-[7. 개발자도구 활용] ()
+[7. 개발자도구 활용, 성능측정] ()
 
 [8. 웹팩과 바벨] ()
 
@@ -56,4 +59,4 @@ Javscript
 
 [15. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
 
-[16. 리액트 버전별 특징]
+[16. 리액트 버전별 차이] ()
