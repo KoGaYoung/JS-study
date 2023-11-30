@@ -24,7 +24,7 @@
 
 [12. 배열과 객체의 조작 방법] ()
 
-[13. ES5_TO_ES6] ()
+[13. ES5_TO_ES6](https://github.com/KoGaYoung/JS-study/blob/main/ES5_TO_ES6.md)
 
 ---
 
