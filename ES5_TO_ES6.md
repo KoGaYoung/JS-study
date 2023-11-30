@@ -106,6 +106,15 @@ const newClass1 = new classExample(0);
 ~~~
 
 ## 모듈
+~~~javascript
+// 모듈이 나오기 전에는 CommonJS(node에서사용)하거나 AMD(비동기모듈정의)와 같은 비표준방식이 사용됨
+// export, import 방식이 도입됨
+
+export function add(x, y) { return x + y; }
+
+import { add } from './math';
+console.log(add(2, 3)); // 5
+~~~
 
 ## 비구조화 할당
 ~~~javascript
@@ -121,6 +130,55 @@ const { name, age } = objectStructure;
 ~~~
 
 ## Promise
+~~~javascript
+// 콜백함수에서 콜백지옥을 해결하기위해 Promise 객체 등장
+
+function fetchWithCallback(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                callback(null, xhr.responseText);
+            } else {
+                callback(new Error('Request failed: ' + xhr.status), null);
+            }
+        }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+
+fetchWithCallback('/api/data', function(err, data) {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(data);
+    }
+});
+
+// --
+function fetchWithPromise(url) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    resolve(xhr.responseText);
+                } else {
+                    reject(new Error('Request failed: ' + xhr.status));
+                }
+            }
+        };
+        xhr.open('GET', url, true);
+        xhr.send();
+    });
+}
+
+fetchWithPromise('/api/data')
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+~~~
 
 ## string 메소드
 ~~~javascript
