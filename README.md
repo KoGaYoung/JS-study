@@ -61,4 +61,4 @@
 
 [16. 리액트 버전별 차이] ()
 
-[17. 쿠키와 세션, JWT] ()
+[17. 쿠키와 세션, JWT](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
