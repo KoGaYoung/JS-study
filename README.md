@@ -59,6 +59,8 @@
 
 [15. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
 
+[16. 상태관리 라이브러리] ()
+
 [16. 리액트 버전별 차이, 리액트 복습좀하자](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B2%84%EC%A0%84%EB%B3%84%20%EC%B0%A8%EC%9D%B4%2C%20%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B3%B5%EC%8A%B5%EC%A2%80%ED%95%98%EC%9E%90.md)
 
 [17. 쿠키와 세션, JWT](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
