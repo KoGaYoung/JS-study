@@ -59,6 +59,6 @@
 
 [15. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
 
-[16. 리액트 버전별 차이] ()
+[16. 리액트 버전별 차이, 리액트 복습좀하자] ()
 
 [17. 쿠키와 세션, JWT](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
