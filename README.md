@@ -65,4 +65,4 @@
 
 [17. 쿠키와 세션, JWT](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
 
-[18. AWS로 내 서비스를 만들어요]()
+[18. 서비스 배포해보기]()
