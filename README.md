@@ -43,7 +43,7 @@
 
 [7. 개발자도구 활용, 성능측정](https://github.com/KoGaYoung/JS-study/blob/main/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%8F%84%EA%B5%AC%20%ED%99%9C%EC%9A%A9.md)
 
-[8. 웹팩과 바벨] ()
+[8. 웹팩과 바벨 vite] ()
 
 [9. eslint 적용](https://github.com/KoGaYoung/JS-study/blob/main/eslint%20%EC%A0%81%EC%9A%A9.md)
 
