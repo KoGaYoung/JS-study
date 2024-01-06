@@ -18,11 +18,11 @@
 
 [9. ES5_TO_ES6](https://github.com/KoGaYoung/JS-study/blob/main/ES5_TO_ES6.md)
 
-[9.모듈 시스템 (CommonJS, ES6 Modules)] ()
+[10.디자인패턴](https://patterns-dev-kr.github.io/)
 
-[12. 배열과 객체의 조작 방법] ()
+[11.모듈 시스템 (CommonJS, ES6 Modules)] ()
 
-[7.디자인패턴] ()
+[12. 배열과 객체의 조작 방법] () _ 카카오톡 나에게 보내기로 정리해둔 내용 참고
 
 ---
 
@@ -35,30 +35,51 @@
 
 [4. CORS](https://github.com/KoGaYoung/JS-study/blob/main/CORS.md)
 
-[5.Restful api + graphQL] ()
+[5. 브라우저 스토리지](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
 
-[6. 브라우저 스토리지](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
+[6. eslint 적용](https://github.com/KoGaYoung/JS-study/blob/main/eslint%20%EC%A0%81%EC%9A%A9.md)
 
-[7. 개발자도구 활용, 성능측정](https://github.com/KoGaYoung/JS-study/blob/main/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%8F%84%EA%B5%AC%20%ED%99%9C%EC%9A%A9.md)
+[7. 디바운스와 스로틀링](https://github.com/KoGaYoung/JS-study/blob/main/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8A%A4%EC%99%80%20%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81.md)
 
-[8. 웹팩과 바벨 vite] ()
+[8. 빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
 
-[9. eslint 적용](https://github.com/KoGaYoung/JS-study/blob/main/eslint%20%EC%A0%81%EC%9A%A9.md)
+[9. 브라우저라우터와 해시라우터](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A7%95%EB%9D%BC%EC%9A%B0%ED%84%B0%EC%99%80%20%ED%95%B4%EC%8B%9C%EB%9D%BC%EC%9A%B0%ED%84%B0.md)
 
-[10. 디바운스와 스로틀링](https://github.com/KoGaYoung/JS-study/blob/main/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8A%A4%EC%99%80%20%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81.md)
+[10. 리액트 버전별 차이, 리액트 복습좀하자](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B2%84%EC%A0%84%EB%B3%84%20%EC%B0%A8%EC%9D%B4%2C%20%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B3%B5%EC%8A%B5%EC%A2%80%ED%95%98%EC%9E%90.md)
 
-[11.리액트의 공통컴포넌트(디자인시스템)]
+[11. 서비스 배포해보기](https://github.com/KoGaYoung/JS-study/blob/main/%EC%84%9C%EB%B9%84%EC%8A%A4_%EB%B0%B0%ED%8F%AC%ED%95%B4%EB%B3%B4%EA%B8%B0.md)
 
-[12.빅인트](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B9%85%EC%9D%B8%ED%8A%B8.md)
+--- (여기부터 보충 필요) ---
+[12. 상태관리 라이브러리](https://github.com/KoGaYoung/JS-study/blob/main/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC.md)
 
-[13.브라우저라우터와 해시라우터](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A7%95%EB%9D%BC%EC%9A%B0%ED%84%B0%EC%99%80%20%ED%95%B4%EC%8B%9C%EB%9D%BC%EC%9A%B0%ED%84%B0.md)
+[13. 쿠키와 세션, JWT 로그인을 구현해보자](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
 
-[14. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
+[14. 개발자도구 활용, 성능측정](https://github.com/KoGaYoung/JS-study/blob/main/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%8F%84%EA%B5%AC%20%ED%99%9C%EC%9A%A9.md)
 
-[15. 상태관리 라이브러리](https://github.com/KoGaYoung/JS-study/blob/main/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC.md)
+[15. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
 
-[16. 리액트 버전별 차이, 리액트 복습좀하자](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B2%84%EC%A0%84%EB%B3%84%20%EC%B0%A8%EC%9D%B4%2C%20%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B3%B5%EC%8A%B5%EC%A2%80%ED%95%98%EC%9E%90.md)
+[16. 디자인시스템에 대한 고민]
 
-[17. 쿠키와 세션, JWT](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BF%A0%ED%82%A4%EC%99%80%20%EC%84%B8%EC%85%98%2C%20JWT.md)
+[17. 웹팩과 바벨 vite] ()
 
-[18. 서비스 배포해보기](https://github.com/KoGaYoung/JS-study/blob/main/%EC%84%9C%EB%B9%84%EC%8A%A4_%EB%B0%B0%ED%8F%AC%ED%95%B4%EB%B3%B4%EA%B8%B0.md)
+[18.Restful api + graphQL] ()
+
+---
+
+# react study
+[0.0 UI 표현하기] ()
+[0.1 상호작용성 더하기] ()
+
+[1. State 관리하기](https://ko.react.dev/learn/managing-state)
+~~~
+1. State를 사용해 Input 다루기
+2. State 구조 선택하기
+3. 컴포넌트간 State 공유하기
+4. State를 보존하고 초기화하기
+5. State로직을 리듀서로 작성하기
+6. Context를 사용해 데이터를 깊게 전달하기
+7. Reducer와 Context로 앱 확장하기
+~~~
+
+
+
