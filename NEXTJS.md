@@ -105,3 +105,11 @@ export const getIncrementalStaticProps: GetIncrementalStaticProps = async() => {
 // 빌드시에 getIncrementalStaticProps 리턴하면 ISR20Page 받아서 랜더링한다.
 // 20초마다 새로 랜더링한다.
 ~~~
+
+## 동적 라우트
+~~~
+~~~
+
+## page router, app router
+~~~
+~~~
