@@ -10,8 +10,6 @@
 
 [5.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%99%80%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
-[6.모듈패턴 네임스페이스패턴] ()
-
 [7.디자인패턴] ()
 
 [8.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
@@ -37,7 +35,7 @@
 
 [4. CORS](https://github.com/KoGaYoung/JS-study/blob/main/CORS.md)
 
-[5.Restful api, graphQL] ()
+[5.Restful api + graphQL] ()
 
 [6. 브라우저 스토리지](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
 
@@ -55,11 +53,9 @@
 
 [13.브라우저라우터와 해시라우터](https://github.com/KoGaYoung/JS-study/blob/main/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A7%95%EB%9D%BC%EC%9A%B0%ED%84%B0%EC%99%80%20%ED%95%B4%EC%8B%9C%EB%9D%BC%EC%9A%B0%ED%84%B0.md)
 
-[14.리덕스와 덕스패턴](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EB%8D%95%EC%8A%A4%EC%99%80%20%EB%8D%95%EC%8A%A4%ED%8C%A8%ED%84%B4.md)
+[14. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
 
-[15. Next.Js](https://github.com/KoGaYoung/JS-study/blob/main/NEXTJS.md)
-
-[16. 상태관리 라이브러리](https://github.com/KoGaYoung/JS-study/blob/main/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC.md)
+[15. 상태관리 라이브러리](https://github.com/KoGaYoung/JS-study/blob/main/%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC.md)
 
 [16. 리액트 버전별 차이, 리액트 복습좀하자](https://github.com/KoGaYoung/JS-study/blob/main/%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B2%84%EC%A0%84%EB%B3%84%20%EC%B0%A8%EC%9D%B4%2C%20%EB%A6%AC%EC%95%A1%ED%8A%B8%20%EB%B3%B5%EC%8A%B5%EC%A2%80%ED%95%98%EC%9E%90.md)
 
