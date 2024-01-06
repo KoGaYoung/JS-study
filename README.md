@@ -10,19 +10,19 @@
 
 [5.실행 컨텍스트, 클로저](https://github.com/KoGaYoung/JS-study/blob/main/%EC%8B%A4%ED%96%89%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%99%80%ED%81%B4%EB%A1%9C%EC%A0%80.md)
 
-[7.디자인패턴] ()
+[6.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
 
-[8.함수형 프로그래밍](https://github.com/KoGaYoung/JS-study/blob/main/%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md)
+[7.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
 
-[9.캡처링과 버블링](https://github.com/KoGaYoung/JS-study/blob/main/%EC%BA%A1%EC%B2%98%EB%A7%81%EA%B3%BC%20%EB%B2%84%EB%B8%94%EB%A7%81.md)
+[8. 프록시](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9D%EC%8B%9C.md)
 
-[10. 프록시](https://github.com/KoGaYoung/JS-study/blob/main/%ED%94%84%EB%A1%9D%EC%8B%9C.md)
+[9. ES5_TO_ES6](https://github.com/KoGaYoung/JS-study/blob/main/ES5_TO_ES6.md)
 
-[11.모듈 시스템 (CommonJS, ES6 Modules)] ()
+[9.모듈 시스템 (CommonJS, ES6 Modules)] ()
 
 [12. 배열과 객체의 조작 방법] ()
 
-[13. ES5_TO_ES6](https://github.com/KoGaYoung/JS-study/blob/main/ES5_TO_ES6.md)
+[7.디자인패턴] ()
 
 ---
 
