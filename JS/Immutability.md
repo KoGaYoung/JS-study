@@ -80,3 +80,4 @@ collection.update('key', (value) => value);
 collection.updateIn(['key1', 'key2'], (value) => value);
 ~~~
 
+## 배열복사에 대한 이슈

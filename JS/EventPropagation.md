@@ -1,6 +1,13 @@
+~~~
+DOM에서 이벤트가 발생하면, 자바스크립트는 DOM 트리를 타고 올라가며 이벤트 전파 매커니즘을 전달해요. (Event Propagation)
+
+이벤트 전파는 캡처링 -> 타겟팅 -> 버블링으로 이뤄지는데, 
+개발자는 단계별로 이벤트를 제어할 수 있게됩니다. 
+(스코프 체인과는 별개입니다, DOM을 타고가는거에요)
+~~~
+
 1. 캡처링과 버블링
  ![image](https://github.com/KoGaYoung/JS-study/assets/36693355/899a4663-db70-4ecc-912d-d53c5c3c88fb)
-
 
 ~~~
 캡처링: Window -> Document -> Html -> Body -> Table -> Tbody -> Tr -> Td 순으로 이벤트 헨들러가 있는지 검사하고 호출함

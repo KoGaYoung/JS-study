@@ -1,3 +1,7 @@
+~~~
+웹의 기본적인 구조와 동작방법을 이해해봅시다
+~~~
+
 # 브라우저 구성요소
 
 ![image](https://github.com/KoGaYoung/JS-study/assets/36693355/0a0d672b-6254-451e-8f93-69a87f88339c)

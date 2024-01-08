@@ -13,7 +13,7 @@ big.js 라이브러리 활용
 곱셈  : .mul(x)
 나눗셈: .div(x)
 ~~~
-~~~java script
+~~~javascript
 import Big from "big.js"
 
 export const ToBigNumber = (val) => {
