@@ -1,0 +1,98 @@
+
+~~~ts
+const Compent1 = ({
+  value
+}) => {
+
+  cosnt [a, setA] = useState(value);
+
+  // useCallback, useMemo ->  메모리 사용량 (메모리 릭 발생 가능성 업)
+
+  // 이렇게 쓰면 useCallback 을 쓰라고 린트에서 난리침
+  // 이유는 이 함수를 여기다 선언할꺼면 useCallback을 감싸야한다 : 왜?
+  // 렌더될때마다 새로 함수가 선언될꺼기 때문에 useCallback 을 쓰라고함
+  // useCallback을 안써도 되는 경우? 여러번 반복적으로 호출되지 않아도되는경우
+
+  const calcA = useCallback() => {
+        // ~~ 계산
+    // 계산된 결과
+    const resultValue = '1';
+    setA(resultValue);
+  }
+
+  const someLogic = () => {
+    calcA();
+  }
+
+  useEffect(() => {
+    calcA();
+    // calcA를 디펜던시에 추가하지않으면 린트상 오류
+  },[value, calcA]);
+
+}
+~~~
+
+
+~~~ts
+const Compent1 = ({
+  value
+}) => {
+  cosnt [a, setA] = useState(value);
+
+  // 아래처럼 여러번 반복되지 않는 경우는 함수를 useEffect 안으로 넣거나,
+  useEffect(() => {
+    const calcA = () => {
+      // ~~ 계산
+    // 계산된 결과
+    const resultValue = '1';
+    setA(resultValue);
+   }
+    calcA();
+  },[value, calcA]);
+
+}
+~~~
+
+~~~ts
+// 종속적이지 않은 값에 대헤서는 컴포넌트 밖으로 빼버림 (유틸처럼 사용)
+// 이러면 무슨 장점이 있냐면
+// 이럴때 장점이 뭐가있는지 찾아보기 ????
+// 전역으로 안되는 이유?
+ const calcA = () => {
+  // ~~ 계산
+  // 계산된 결과
+  const resultValue = '1';
+  return something;
+  // setA(resultValue);
+}
+
+const Compent1 = ({
+  value
+}) => {
+  cosnt [a, setA] = useState(value);
+
+  useEffect(() => {
+    calcA();
+  },[value, calcA]);
+}
+~~~
+
+~~~ts
+// useEffect가 필요하지 않은 상황일 수 있음
+// 가능하면 useCallbackRhk useEffect를 꼭 필요한 상황에서만 쓰는게 좋다.
+// 꼭 필요한 상황이 뭔데?
+
+// https://ko.react.dev/learn/you-might-not-need-an-effect
+const Compent1 = ({
+  value
+}) => {
+  cosnt [a, setA] = useState(value);
+
+  const a = (newA) => {
+     // ~~ 계산
+    // 계산된 결과
+    const resultValue = '1';
+    setA(resultValue);
+  }
+}
+~~~
