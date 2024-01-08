@@ -54,3 +54,10 @@ npm: 근본
 yarn: yarn berry + mono repo + zero install
 pnpm : tuborepo + mono repo + global package
 ~~~
+
+## npm to pnpm 넘어가보기
+~~~
+빌드, 배포 속도 단축
+다양한 레포에서의 일관성있는 디펜던시 설정 관점에서 적용해보기
+
+~~~
