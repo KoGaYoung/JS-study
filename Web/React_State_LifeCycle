@@ -22,7 +22,7 @@ const Compent1 = ({
 
   const someLogic = () => {
     calcA();
-  }
+  }==
 
   useEffect(() => {
     calcA();

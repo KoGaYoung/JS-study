@@ -47,29 +47,33 @@
 
 [7. Eslint 적용](./Web/Eslint.md)
 
-[8. 디바운스와 스로틀링(Rate Limiting)](./Web/RateLimiting.md)
+[8. 빅인트, 부동소숫점(Numerics)](./Web/Numerics.md)
 
-[9. 빅인트, 부동소숫점(Numerics)](./Web/Numerics.md)
+[9. 리액트 버전별 차이(리액트 복습좀하자)](./Web/ReactVersion.md)
 
-[10. 리액트 버전별 차이(리액트 복습좀하자)](./Web/ReactVersion.md)
+[10. 최적화, 나의 생각(optimization)] ()
+
+ㄴ [10.1. Lazy vs @component/lodable(Code Splitting)] ()
+
+ㄴ [10.2. 디바운스와 스로틀링(Rate Limiting)](./Web/RateLimiting.md)
+
+ㄴ [10.3. useMemo, useCallback(Memoize)] ()
+
+ㄴ [10.4. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
 
 [11. 서비스 운영환경에 자동배포 구축해보기(Deployment Automation)](./Web/DeploymentAutomation.md)
-
-// 여기부터는 내용 보강 필요
 
 [12. 상태관리 라이브러리(Global State)](./Web/GlobalStateManagement.md)
 
 [13. 쿠키와 세션, JWT 로그인을 구현해보자(Authentication)](./Web/Authentication.md)
 
-[14. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
-
 [15. Next.Js](./Web/NextJS.md)
 
 [17. 웹팩과 바벨 vite(BuildTools)] ()
 
-[18.Restful api, React-query, GrapQL] ()
+[18.Restful api, React-query, GrapQL] () _비등기프로그래밍과 같이보기
 
-[19. React 상태관리, 라이프사이클 관리] ()
+[19. React 상태관리, 라이프사이클 관리](./Web/React_State_LifeCycle)
 
 ---
 
