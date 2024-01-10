@@ -30,7 +30,7 @@
 자 계정을 생성했다면 (축하해요!) 로그인 후 EC2 생성하기를 눌러줍니다.
 ~~~
 
-<img width="800" alt="image" src="img/aws_hompage.png">
+<img width="800" alt="image" src="../img/aws_hompage.png">
 
 ### 2. EC2 인스턴스 생성
 ~~~
@@ -41,7 +41,7 @@ EC2는 Elastic Compute Cloud 의 줄임말로,
 몇 가지 설정이 필요한데 차례대로 따라가봅시다. (각 설정별 설명도 해드릴께요)
 ~~~
 
-<img width="800" alt="image" src="img/ec2_1.png">
+<img width="800" alt="image" src="../img/ec2_1.png">
 
 ~~~
 이름을 입력해줍니다. (ex. wait_bucket)
@@ -68,14 +68,14 @@ AWS Linux와 리눅스 둘 중 하나를 고민했는데요.
 리눅스를 선택했습니다.
 ~~~
 
-<img width="800" alt="image" src="img/ec2_2.png">
+<img width="800" alt="image" src="../img/ec2_2.png">
 
 ~~~
 프리티어(무료)를 이용하고 있기 때문에 인스턴스 유형은 t2.micro를 선택해줍니다.
 ~~~
 
-<img width="800" alt="image" src="img/ec2_3.png">
-<img width="800" alt="image" src="img/ec2_4.png">
+<img width="800" alt="image" src="../img/ec2_3.png">
+<img width="800" alt="image" src="../img/ec2_4.png">
 
 ~~~
 키-페어를 선택하거나 새로 만들어줍니다. 
@@ -90,7 +90,7 @@ RSA 암호화를 선택해주고 파일은 ssh를 통해 접속할꺼기때문�
 chmod 400 /path/to/${your-key-name}.pem
 ~~~
 
-<img width="800" alt="image" src="img/ec2_5.png">
+<img width="800" alt="image" src="../img/ec2_5.png">
 
 ~~~
 네트워크 설정의 경우 기존 보안 그룹이 있다면 선택,
@@ -98,7 +98,7 @@ chmod 400 /path/to/${your-key-name}.pem
 (밑에서 보안그룹 만들꺼라 지금은 패스해요!)
 ~~~
 
-<img width="800" alt="image" src="img/ec2_6.png">
+<img width="800" alt="image" src="../img/ec2_6.png">
 
 ~~~
 스토리지의 용량을 30기가 내에서 설정할 수 있습니다.
@@ -110,7 +110,7 @@ chmod 400 /path/to/${your-key-name}.pem
 그리고 인스턴스 시작을 눌러주면 인스턴스 생성 완료입니다
 ~~~
 
-<img width="800" alt="image" src="img/ec2_7.png">
+<img width="800" alt="image" src="../img/ec2_7.png">
 
 ## 3. 보안 그룹 설정
 ~~~
@@ -120,7 +120,7 @@ chmod 400 /path/to/${your-key-name}.pem
 launch-wizard-1 이름으로 하나 생성해주었습니다.
 ~~~
 
-<img width="800" alt="image" src="img/aws_security_1.png">
+<img width="800" alt="image" src="../img/aws_security_1.png">
 
 ~~~
 SSH(22번 포트), HTTP(80번 포트), HTTPS(443번 포트)에 대한 규칙을 설정해요.
@@ -138,16 +138,16 @@ HTTP, HTTPS -> 웹 페이지를 요청하고 전송하는 데 사용해요
 보안그룹 생성을 눌러서 그룹을 생성해줘요!
 ~~~
 
-<img width="800" alt="image" src="img/aws_security_3.png">
-<img width="800" alt="image" src="img/aws_security_4.png">
-<img width="800" alt="image" src="img/aws_security_5.png">
+<img width="800" alt="image" src="../img/aws_security_3.png">
+<img width="800" alt="image" src="../img/aws_security_4.png">
+<img width="800" alt="image" src="../img/aws_security_5.png">
 
 
 ~~~
 그리고 EC2 > 작업 > 보안 > 보안그룹 설정으로 와서 보안그룹을 만들어둔 launch_wizard-1로 변경해줍니다.
 ~~~
 
-<img width="800" alt="image" src="img/aws_security_6.png">
+<img width="800" alt="image" src="../img/aws_security_6.png">
 
 ---
 
@@ -162,8 +162,8 @@ HTTP, HTTPS -> 웹 페이지를 요청하고 전송하는 데 사용해요
 
 ## 5. SSH 접속해서 BackEnd, FrontEnd 서버 배포
 
-<img width="800" alt="image" src="img/aws_server_1.png">
-<img width="800" alt="image" src="img/aws_server_2.png">
+<img width="800" alt="image" src="../img/aws_server_1.png">
+<img width="800" alt="image" src="../img/aws_server_2.png">
 
 ~~~
 터미널에서 다음 명령어를 사용하여 인스턴스에 접속해요.
@@ -192,7 +192,7 @@ git clone [프론트엔드 레포지토리 URL] [프론트 폴더명]
 ~~~
 
 ### 여기서 ls를 통해 확인해보면 두 프로젝트가 클론된 것을 확인할 수 있습니다.
-<img width="800" alt="image" src="img/aws_server_3.png">
+<img width="800" alt="image" src="../img/aws_server_3.png">
 
 ### 5. 4 종속성 설치도 해주세요
 ~~~
@@ -217,15 +217,15 @@ pm2 start npm -w --name {wait_bucket} -- run start
 ~~~
 pm2 status
 ~~~
-<img width="800" alt="image" src="img/aws_server_4.png">
+<img width="800" alt="image" src="../img/aws_server_4.png">
 
 ### 브라우저를 통해서도 확인이 가능해요
 ~~~
 퍼블릭 IPv4 DNS:{port}
 를 통해 접속해서 화면을 확인할 수 있어요.
 ~~~
-<img width="800" alt="image" src="img/aws_server_5.png">
-<img width="800" alt="image" src="img/aws_server_6.png">
+<img width="800" alt="image" src="../img/aws_server_5.png">
+<img width="800" alt="image" src="../img/aws_server_6.png">
 
 ### 스크립트로 배포를 자동화해볼까요?
 (코드 변경할 때마다 스크립트로 명령어들을 한번에 처리해줘요)
@@ -289,24 +289,24 @@ pm2 delete all 후 재 실행해주세요
 레포지토리 > Settings > Secrect and variables > Actions > new respository secrect
 ~~~
 
-<img width="800" alt="image" src="img/git_action_1.png">
+<img width="800" alt="image" src="../img/git_action_1.png">
 
 ~~~
 SSH_PEM, BUILD_SSH_IP, BUILD_SSH_USER 키를 만들어줍니다. (일단 따라해봐요 이유가 있어요)
 (pem파일은 파일 내용이 필요한데, .pem 파일은 open with -> textEdit 같은 편집기로 열어서 내용을 복붙해주세요)
 ~~~
 
-<img width="800" alt="image" src="img/git_action_2.png">
-<img width="800" alt="image" src="img/git_action_3.png">
-<img width="800" alt="image" src="img/git_action_4.png">
-<img width="800" alt="image" src="img/git_action_8.png">
+<img width="800" alt="image" src="../img/git_action_2.png">
+<img width="800" alt="image" src="../img/git_action_3.png">
+<img width="800" alt="image" src="../img/git_action_4.png">
+<img width="800" alt="image" src="../img/git_action_8.png">
 
 ~~~
 SSH_PEM, BUILD_SSH_IP, BUILD_SSH_USER 키를 만들어줍니다. (일단 따라해봐요 이유가 있어요)
 아래 사진은 만들어진 예쁜 키들..
 ~~~
 
-<img width="800" alt="image" src="img/git_action_9.png">
+<img width="800" alt="image" src="../img/git_action_9.png">
 
 ~~~
 그리고 git action에서 ec2를 통한 배포를 눌러줍니다
@@ -314,7 +314,7 @@ SSH_PEM, BUILD_SSH_IP, BUILD_SSH_USER 키를 만들어줍니다. (일단 따라�
 (파일명 main으로 바꿔주세요.)
 ~~~
 
-<img width="800" alt="image" src="img/git_action_6.png">
+<img width="800" alt="image" src="../img/git_action_6.png">
 
 ~~~
 그리고 아래 코드를 넣고 commit을 해볼까요
@@ -370,7 +370,7 @@ jobs:
 오류가 난다면 로그를 보고 수정을해주세요.
 ~~~
 
-<img width="800" alt="image" src="img/git_action_7.png">
+<img width="800" alt="image" src="../img/git_action_7.png">
 
 ~~~
 프론트앤드 레포에서도 동일하게 키를 추가해주고, 아래 코드를 추가해주세요.
@@ -430,7 +430,7 @@ DNS는 말그대로 저희가 브라우저상에 google.com을 치면
 도메인 이름을 IP주소로 변환하는데 사용하는 A레코드를 등록해주었습니다.
 ~~~
 
-<img width="800" alt="image" src="img/dns_1.png">
+<img width="800" alt="image" src="../img/dns_1.png">
 
 ~~~
 자 여기서 waitbucket.co.kr로 접속할 경우 화면이 안뜹니다
@@ -489,4 +489,4 @@ http://waitbucket.co.kr/
 ~~~
 
 
-<img width="800" alt="image" src="img/nginX_1.png">
+<img width="800" alt="image" src="../img/nginX_1.png">

@@ -51,7 +51,8 @@
 
 [9. 리액트 버전별 차이(리액트 복습좀하자)](./Web/ReactVersion.md)
 
-[10. 최적화, 나의 생각(optimization)] ()
+[10. 최적화, 나의 생각(optimization)] () _ 아래 url 읽어보기  
+https://kentcdodds.com/blog/usememo-and-usecallback
 
 ㄴ [10.1. Lazy vs @component/lodable(Code Splitting)] ()
 
@@ -71,18 +72,22 @@
 
 [17. 웹팩과 바벨 vite(BuildTools)] ()
 
-[18.Restful api, React-query, GrapQL] () _비등기프로그래밍과 같이보기
+[18. Restful api, React-query, GrapQL] () _비등기프로그래밍과 같이보기
 
 [19. React 상태관리, 라이프사이클 관리](./Web/React_State_LifeCycle)
+
+[20. 나를 편리하게 해주는 개발자도구 개발하기(Browser Extenstion)](./Web/BrowserExtenstion.md)
 
 ---
 
 ## [react study]
+### react 공홈(https://ko.react.dev/)
+
 [0.0 UI 표현하기] ()
 
 [0.1 상호작용성 더하기] ()
 
-[1. State 관리하기](https://ko.react.dev/learn/managing-state)
+[1. State 관리하기](./React/StateManagement.md)
 ~~~
 1. State를 사용해 Input 다루기
 2. State 구조 선택하기
