@@ -214,7 +214,7 @@ function submitForm(answer) {
 
 ~~~
 ### 챌린지 1 of 3: CSS class를 추가하고 제거하기 
-~~~
+~~~js
 import react, {useState} from 'react';
 
 export default function Picture() {
@@ -304,11 +304,11 @@ export default function EditProfile() {
 ---
 # 2. State 구조 선택하기
 ~~~
-연관된 state 그룹화하기. 두 개 이상의 state 변수를 항상 동시에 업데이트한다면, 단일 state 변수로 병합하는 것을 고려
-State의 모순 피하기.
-불필요한 state 피하기. 렌더링 중에 컴포넌트의 props나 기존 state 변수에서 일부 정보를 계산할 수 있다면, 컴포넌트의 state에 해당 정보를 넣지 않아야 합니다.
-State의 중복 피하기.
-깊게 중첩된 state 피하기. 
+2.1 연관된 state 그룹화하기. 두 개 이상의 state 변수를 항상 동시에 업데이트한다면, 단일 2.2.2 state 변수로 병합하는 것을 고려
+2.3 State의 모순 피하기.
+2.4 불필요한 state 피하기. 렌더링 중에 컴포넌트의 props나 기존 state 변수에서 일부 정보를 계산할 수 있다면, 컴포넌트의 state에 해당 정보를 넣지 않아야 합니다.
+2.5 State의 중복 피하기.
+2.6 깊게 중첩된 state 피하기. 
 ~~~
 
 ## 2.1 연관된 state 그룹화하기.
@@ -385,6 +385,7 @@ export default function Clock(props) {
 
 ### 챌린지 2 of 4: 깨진 포장 목록 수정하기 
 ~~~js
+//불필요한 state 피하기 
   const total = items.length;
   const packed = items
     .filter(item => item.packed)
@@ -395,6 +396,7 @@ export default function Clock(props) {
 ### 챌린지 3 of 4: 선택 사라짐 수정하기 
 
 ~~~
+(State의 중복 피하기.)
 highlightedId로 변경
 ~~~
 
