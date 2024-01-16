@@ -6,13 +6,13 @@ State 업데이트 로직을 유지보수하기 용이하게
 ~~~
 
 ~~~
-1. State를 사용해 Input 다루기
-2. State 구조 선택하기
-3. 컴포넌트간 State 공유하기
-4. State를 보존하고 초기화하기
-5. State로직을 리듀서로 작성하기
-6. Context를 사용해 데이터를 깊게 전달하기
-7. Reducer와 Context로 앱 확장하기
+3-1. State를 사용해 Input 다루기
+3-2. State 구조 선택하기
+3-3. 컴포넌트간 State 공유하기
+3-4. State를 보존하고 초기화하기
+3-5. State로직을 리듀서로 작성하기
+3-6. Context를 사용해 데이터를 깊게 전달하기
+3-7. Reducer와 Context로 앱 확장하기
 ~~~
 
 ~~~js
@@ -288,6 +288,9 @@ export default function EditProfile() {
             <input value={name.lastName} onChange={(e) => changeName(e.target.value, 'last')} />
         }
       </label>
+      {/* 버튼 타입을 지정해주지않으면 submit이 기본동작, 
+      submit 타입은 form의 onSubmit 함수를 트리거함.
+      type을 button으로하면 onSubmit 동작 안함*/}
       <button type="submit" onClick={handleClick}>
         {!isEdit ? 'Edit Profile' : 'Save'}
       </button>
@@ -318,6 +321,9 @@ const [y, setY] = useState(0);
 
 // 항상 x, y가 한타이밍에 변경된다면
 const [position, setPosition] = useState({ x: 0, y: 0 });
+
+// 리액트 18에서는 배치가 업데이트되면서 
+// 따로써도 문제없을 정도의 수준인지 
 ~~~
 
 ## 2.2 불필요한 state 피하기 
@@ -401,3 +407,19 @@ highlightedId로 변경
 ~~~
 
 ### 챌린지 4 of 4: 다중 선택 구현 
+
+~~~js
+// prevCount 최신값 보장
+setCount(prevCount => prevCount+1);
+
+// count+1 count 가 디팬던시에 저장해야만 함
+// 그냥 썼을 때 크게 문제가되진않음
+setCount(count+1);
+~~~
+
+~~~
+리덕스 툴킷같은걸 사용하면 immer가 자동으로딤
+//
+인덱스로 만들면 순서여서
+배열 업데이트가 안될 수있다.
+~~~
