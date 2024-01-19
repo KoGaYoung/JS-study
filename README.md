@@ -18,7 +18,7 @@
 
 [9. 함수형 프로그래밍(Functional Programming)](./JS/FP.md)
 
-[10. 배열과 객체의 조작 방법] () _ 카카오톡 나에게 보내기로 정리해둔 내용 참고
+[10. 배열과 객체의 조작 방법](./JS/ArrayManipulate.md) _ 배열 복사와 조작에 대한 내용 추가
 
 [11. 프록시(Proxy)](./JS/Proxy.md)
 
@@ -58,7 +58,7 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 
 ㄴ [10.2. 디바운스와 스로틀링(Rate Limiting)](./Web/RateLimiting.md)
 
-ㄴ [10.3. useMemo, useCallback(Memoize)] ()
+ㄴ [10.3. useMemo, useCallback(Memoize)] () _주로사용처, 꼭 사용해야할까
 
 ㄴ [10.4. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
 
@@ -83,7 +83,7 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 ## [react study]
 ### react 공홈(https://ko.react.dev/)
 
-[1. UI 표현하기] ()
+[1. UI 표현하기] (UIExpression)
 ~~~
 1-1. 첫 번째 컴포넌트
 1-2. 컴포넌트 import 및 export하기
