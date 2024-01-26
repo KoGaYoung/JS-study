@@ -240,7 +240,49 @@ export default function Profile() {
 // 구조분해할당~, 기본값 지정 가능
 function Avatar({ person, size = 10 }) {
   // person과 size는 이곳에서 사용가능합니다.
+  
+  
+
 }
 ~~~
 
 ## 1-5. [배열에 넘기는 JSX를 같이보자](./JS/ArrayManipulate.md)
+
+~~~
+.jsx 확장자 언제유효?
+
+props undefined는 없는값취급됨
+null, 0은 default 값 사용 불가능
+
+스프레드를 썼을 때 명시적이지 않음
+객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
+...props를 썼을때 렌더링관점에서 이점이 있는지?
+
+// 선언식
+export default function Button () {}
+
+// 표현식 
+const Button = () => {}
+
+export default Button
+
+
+export 자체는 한줄로 써도 문제가업슴. 
+default에 그런 기능이있는거아닐까?
+
+// 
+const {name, age} = props;
+
+// props 비구조화 할당 로로패턴 성능상 이점이 있는지!
+function Child({ name, age}) {
+
+}
+
+uuid 패키지 사용 안해도됨
+-> crypto,randdomUUID() 내장 라이브러 제공
+-> 브라우저 호환성 떨어짐
+
+소스수정!
+
+key
+~~~
