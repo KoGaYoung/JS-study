@@ -254,45 +254,6 @@ function Avatar({ person, size = 10 }) {
 
 ## 1-5. [배열에 넘기는 JSX를 같이보자](./JS/ArrayManipulate.md)
 
-```
-.jsx 확장자 언제유효?
----
-props undefined는 없는값취급됨
-null, 0은 default 값 사용 불가능
----
-스프레드를 썼을 때 명시적이지 않음
-객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
-...props를 썼을때 렌더링관점에서 이점이 있는지?
----
-// 선언식
-export default function Button () {}
-
-// 표현식
-const Button = () => {}
-
-export default Button
-
-
-export 자체는 한줄로 써도 문제가업슴.
-default에 그런 기능이있는거아닐까?
----
-//
-const {name, age} = props;
-
-// props 비구조화 할당 로로패턴 성능상 이점이 있는지!
-function Child({ name, age}) {
-
-}
----
-uuid 패키지 사용 안해도됨
--> crypto,randdomUUID() 내장 라이브러 제공
--> 브라우저 호환성 떨어짐
-
-소스수정!
-
-key가 변경될 경우 예제소스 맨앞에 아이템 추가했을때 전체 렌더링!
-```
-
 ---
 
 ## 1-6. 조건부 렌더링
@@ -311,11 +272,14 @@ return <li className="item">{isPacked ? name + " ✔" : name}</li>;
 
 ```
 두 에제는 동일할까요?
-공식 문서에서는 실제 DOM요소가 아니기에 완전히 똑같다고 하지만
+공식 문서에서는 실제 DOM요소가 아니기에 완전히 똑같다고 인식한다.
 
 조건부 렌더링에서는 <li>태그를 다시그리는 반면
 삼항 연산자의 경우 <li>태그는 그대로 두고, 내용물만 다시 그리기 때문에
-렌더링 관점에서효율적이라고 볼 수 있다.
+렌더링 관점에서 효율적이라고 볼 수 있다.
+
+둘 중 하나만 리턴되기때문에 리액트 엔진이 동일한 위치에 같은태그는 같은 컴포넌트로 인식해서 초기화되지않는다
+()
 ```
 
 ## 1-6. 조건부 렌더링 && 표현
@@ -487,6 +451,10 @@ export default function TeaSet() {
 ~~~
 전체 컴포넌트를 <React.StrictMode>로 엄격모드 함으로써
 순수 컴포넌트가 아닐경우 에러를 강제적으로 발생시킬 수 있습니다.
+
+가끔 콘솔에서 콘솔이 2번 찍힐떄가 있는데, 이건 엄격모드로
+2번 실행시키고 있기 때문이다.
+(오랫동안 궁금했던 2번 실행의 이유...React.StrictMode)
 ~~~
 
 ~~~jsx
@@ -549,3 +517,47 @@ export default function TeaGathering() {
 1. webpack-bundle-analyzer 을 이용한 번들사이즈 체킹
 2. cra 전용 cra-bundle-analyzer를 이용해서 사용함
 ~~~
+
+
+
+---
+
+
+```
+.jsx 확장자 언제유효?
+---
+props undefined는 없는값취급됨
+null, 0은 default 값 사용 불가능
+---
+스프레드를 썼을 때 명시적이지 않음
+객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
+...props를 썼을때 렌더링관점에서 이점이 있는지?
+---
+// 선언식
+export default function Button () {}
+
+// 표현식
+const Button = () => {}
+
+export default Button
+
+
+export 자체는 한줄로 써도 문제가업슴.
+default에 그런 기능이있는거아닐까?
+---
+//
+const {name, age} = props;
+
+// props 비구조화 할당 로로패턴 성능상 이점이 있는지!
+function Child({ name, age}) {
+
+}
+---
+uuid 패키지 사용 안해도됨
+-> crypto,randdomUUID() 내장 라이브러 제공
+-> 브라우저 호환성 떨어짐
+
+소스수정!
+
+key가 변경될 경우 예제소스 맨앞에 아이템 추가했을때 전체 렌더링!
+```
