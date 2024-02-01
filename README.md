@@ -4,7 +4,7 @@
 
 [2. 호이스팅과 활용(Hoisting)](./JS/Hoisting.md)
 
-[3. 실행 컨텍스트, 클로저(Scope)](./JS/Scope.md)
+[3. 실행 컨텍스트, 클로저, 가비지컬렉터(Scope)](./JS/Scope.md)
 
 [4. 콜스택과 이벤트루프(Concurrency)](./JS/Concurrency.md)
 
