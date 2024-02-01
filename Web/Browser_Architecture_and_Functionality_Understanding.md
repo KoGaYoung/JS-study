@@ -20,6 +20,8 @@ ui 백앤드: input, button, select 등 기본적인 위젯 그리는 인터페�
 # 화면에 요소들이 그려지는 방법
 ~~~
 css Tree + Dom Tree = (합치기(Attachment)) => render Tree -> 정확한 위치와 픽셀 크기를 계산 (배치(Layout) or Reflow) -> 진짜 화면에 그리기(patining)
+
+리액트는 랜더트리 만들기 만들기 전 virtual dom으로 diff 알고리즘을 수행한다. 이를 통해 리플로우 리페인트를 줄임으로써 O(n)까지 성능이 나왔다고 할 수 있다
 ~~~
 
 # reflow
