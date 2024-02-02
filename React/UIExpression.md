@@ -522,11 +522,10 @@ export default function TeaGathering() {
 
 ---
 
-## 스터디하다가 나온 주제들
-~~~
-선언식은 한줄로 쓸 수 있지만, 표현식은 2줄로 써야한다.
-도대체 왜?
+# 스터디하다가 나온 주제들
 
+## 컴포넌트 선언식은 한줄로 쓸 수 있지만, 표현식은 2줄로 써야한다. 도대체 왜?
+~~~
 // 선언식
 export default function Button () {};
 
@@ -534,6 +533,8 @@ export default function Button () {};
 const Button = () => {};
 
 export default Button;
+
+// 사전지식: export 키워드 뒤에는 선언식이든 표현식이든 올 수 있다. default 키워드에 뭐가 있는 것 같다고 추측했다.
 
 결론: which expects a HoistableDeclaration, ClassDeclaration or AssignmentExpression
 (공홈: https://262.ecma-international.org/6.0/#sec-exports-static-semantics-boundnames)
@@ -554,22 +555,23 @@ export default {
 };
 ~~~
 
+## 컴포넌트 최적화 관점에서 객체는 
+~~~
+스프레드를 썼을 때 명시적이지 않음
+객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
+...props를 썼을때 렌더링관점에서 이점이 있는지?
+~~~
+
 ```
 .jsx 확장자 언제유효?
 ---
 props undefined는 없는값취급됨
 null, 0은 default 값 사용 불가능
----
-스프레드를 썼을 때 명시적이지 않음
-객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
-...props를 썼을때 렌더링관점에서 이점이 있는지?
+
 ---
 
 
 
-export 자체는 한줄로 써도 문제가업슴.
-default에 그런 기능이있는거아닐까?
----
 //
 const {name, age} = props;
 

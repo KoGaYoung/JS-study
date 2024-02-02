@@ -99,7 +99,7 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 1-10. 상용구형성 다하기
 ~~~
 
-[2. 상호작용성 더하기] ()
+[2. 상호작용성 더하기](./React/AddingInteractivity.md)
 ~~~
 2-1. 이벤트에 응답하기
 2-2. State: 컴포넌트의 기억 저장소
