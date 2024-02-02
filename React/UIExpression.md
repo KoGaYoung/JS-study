@@ -523,7 +523,36 @@ export default function TeaGathering() {
 ---
 
 ## 스터디하다가 나온 주제들
+~~~
+선언식은 한줄로 쓸 수 있지만, 표현식은 2줄로 써야한다.
+도대체 왜?
 
+// 선언식
+export default function Button () {};
+
+// 표현식
+const Button = () => {};
+
+export default Button;
+
+결론: which expects a HoistableDeclaration, ClassDeclaration or AssignmentExpression
+(공홈: https://262.ecma-international.org/6.0/#sec-exports-static-semantics-boundnames)
+
+구글링 해보니 HoistableDeclaration: 호이스팅이 가능한 함수선언식,
+ClassDeclaration: 클래스 선언문,
+AssignmentExpression: 할당 표현식(변수 할당, 함수 표현식, 객체 리터럴 등)만 올 수 있다.
+
+할당 표현식 예제는 아래와 같다.
+
+// 변수에 함수 할당
+export default function() {};
+
+// 객체 리터럴
+export default {
+  key: "value",
+  method() {}
+};
+~~~
 
 ```
 .jsx 확장자 언제유효?
@@ -535,13 +564,7 @@ null, 0은 default 값 사용 불가능
 객체로 넘겨져서 안쓰는게 어트리뷰트를 따로 빼서 쓰는게 좋음
 ...props를 썼을때 렌더링관점에서 이점이 있는지?
 ---
-// 선언식
-export default function Button () {}
 
-// 표현식
-const Button = () => {}
-
-export default Button
 
 
 export 자체는 한줄로 써도 문제가업슴.
