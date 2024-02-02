@@ -33,6 +33,21 @@ https://pyjun01.github.io/v/declarative-ui/?trk=feed_main-feed-card_reshare_feed
 5. 함수 조합: 재사용성 + 간결
 ~~~
 
+## 함수형 프로그래밍 커링(curring)
+~~~js
+const curry = fn => fn2 => a => b => fn(a,b) + fn2(a,b)
+
+const add = (a,b) => a+b;
+
+const multiply = (a, b) => a*b;
+
+curry(add)(multiply)(3,5); // 23
+~~~
+~~~
+함수를 반환하는 함수 (재사용, 코드)
+-> 함수는 반복적인 동작을 재사용을 위한 코드.
+-> 함수 자체를 재사용 할수 있도록 함수를 위한 함수를 만듬.
+~~~
 ## 함수형 프로그래밍 예제
 ~~~javascript
 // 선언

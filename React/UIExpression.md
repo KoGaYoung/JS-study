@@ -522,6 +522,8 @@ export default function TeaGathering() {
 
 ---
 
+## 스터디하다가 나온 주제들
+
 
 ```
 .jsx 확장자 언제유효?
