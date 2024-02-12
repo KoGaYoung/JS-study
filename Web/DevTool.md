@@ -76,6 +76,7 @@ Edit -> Devices -> 추가 or Add Custom deivices를 통해 확인하고 싶은 �
 
 아래 사진을 보면 해당 코드로 직접 넘어갈 수도 있다
 ~~~
+
 <img width="1326" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/8e9d83be-3d89-4f51-86c7-98bdc5333034">
 
 ~~~
@@ -87,6 +88,7 @@ Edit -> Devices -> 추가 or Add Custom deivices를 통해 확인하고 싶은 �
 ~~~
 
 <img width="858" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/b5cb956e-a388-41a1-9edb-c2001e4432e4">
+
 ~~~
 DCL(DOMContentLoaded Event): DOM이 준비되고 그 시점에 자바스크립트 실행을 차단하는 스타일시트가 없는 시점을 표시.
  즉, 이제 (잠재적으로) 렌더링 트리를 생성 가능하다. DCL이 더 빠를수록 다음 로직이 더 빠르게 실행된다.
@@ -101,11 +103,23 @@ L(Onload Event)
 <img width="663" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/db9b904a-f17c-47b1-a203-8697b24cdbbb">
 
 ~~~
-초기랜더링 성능을 확인할 때는 performance monitor로 시각적으로 바로 확인이 가능하다
+실시간, 지속적으로 performance monitor로 시각적으로 바로 확인이 가능하다
+(evnetListner를 보고 리스너 초기화 안되서 메모리 릭 나는지 확인 가능하다.)
 ~~~
-<img width="1099" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/8f089f40-48bb-485e-8331-989ef05e31bb">
+<img src="../img/devtool_performacne_monitor.png" width="300px">
 
 ~~~
 react dev tool의 Components를 통해 불필요한 데이터가 있는지 컴포넌트 단위별러도 확인할 수 있다
 ~~~
+
 <img width="1095" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/296e3fdb-814a-4d11-8e90-96d8cf47ffd4">
+
+
+
+~~~
+하단 Rendering > Frame rendering stats
+Rendering > core web vital을 통해 퍼포먼스탭보다
+LCP랑 프레임율 사용 간단하게 보기 좋다.
+~~~
+
+<img src="../img/devtool_frameRate_lcp.png" width="300px">
