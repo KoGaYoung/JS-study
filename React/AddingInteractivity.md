@@ -156,12 +156,12 @@ export default function Counter() {
 ~~~
 이 이미지 속 버튼을 클릭하면 +3이아닌 +1로 동작한다!
 
-이유는 클로저와 비동기업데이트 때문이다. 
+이유는 클로저와 배치 때문이다. 
 
 일단 클로저는 setNumber 함수 정의할 때 외부변수인 number, setNumber에 접근할 수 있어서, 
 setNumber(number => return number + 1) 로 동작할때 number가 0이기 때문이다.
 
-setState는 비동기적으로 업데이트되어서 setNumber가 3번 발생하지만
+setState는 비동기적으로 업데이트되어서 setNumber가 "3번 발생하지만"
 number에 반영되기 전에 setNumber(0 => return 0 + 1) 이 3번 일어나게 되는것과 같다.
 1 -> 2 -> 3 빠르게 반영되는게 아닌데도 말이다
 ~~~
@@ -351,3 +351,4 @@ setNumber((prev) => ({ ...number, y: prev.y + 1 }));
 
 이유는 바퀴의 재발명.. 협업등의 요소로 매번 코드를 분석해야하기때문
 ~~~
+
