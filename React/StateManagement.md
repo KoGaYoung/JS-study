@@ -93,6 +93,13 @@ render (
 state값을 유지합니다.
 (삼항연산자가 아니여도, Counter 컴포넌트 위치가 같다면 state를 유지합니다.)
 
+같은 위치에 렌더링하는것처럼 보이지만,
+이 경우는 다른위치로 인식합니다.
+render(
+  {!isFancy && <Counter />}
+  {isFancy && <Counter />}
+)
+
 단, 같은위치의 다른 컴포넌트라면 state가 초기화됩니다.
 render (
   isStyled ? 
@@ -137,12 +144,6 @@ render(
       </>
 )
 
-같은 위치에 렌더링하는것처럼 보이지만,
-이 경우는 다른위치로 인식합니다.
-render(
-  {!isFancy && <Counter />}
-  {isFancy && <Counter />}
-)
 ~~~
 
 ~~~
