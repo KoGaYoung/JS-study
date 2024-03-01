@@ -151,11 +151,210 @@ render(
 
 
 네: 리액트에서는 key가 컴포넌트의 고유 식별자로 사용되며, 동일한 key가 있으면 해당 컴포넌트를 재사용합니다. 따라서 같은 key를 사용하면 다른 위치에서도 동일한 컴포넌트로 인식하여 state 값을 보존할 수 있습니다.
-
-
-
 ~~~
 
+
+### 3-5 state 로직을 reducer로 작성하기
+~~~
+컴포넌트 안에서 state 변경이 많아진다면, 로직 복잡도가 올라갑니다.
+이 때 리듀서를 사용하면 state 변경 로직을 외부 한 군데서 관리할 수 있습니다.
+~~~
+
+~~~jsx
+// 원본 코드
+const TaskApp = () => {
+  const [tasks, setTasks] = useState(initialTasks);
+
+  /*
+   * 추가 함수
+   */
+  const handleAddTask = (text) => {
+    setTasks([...tasks, {
+      id: nextId++,
+      text: text,
+      done: false
+    }]);
+  }
+
+  /*
+   * task를 토글하거나 저장,
+   */
+  const handleChangeTask = (task) =>{
+    setTasks(tasks.map(t => {
+      if (t.id === task.id) {
+        return task;
+      } else {
+        return t;
+      }
+    }));
+  }
+
+  /*
+   * 삭제함수 
+   */
+  const handleDeleteTas = (taskId) => {
+    setTasks(
+      tasks.filter(t => t.id !== taskId)
+    );
+  }
+
+  return (
+    <>
+      <AddTask
+        onAddTask={handleAddTask}
+      />
+      <TaskList
+        tasks={tasks}
+        onChangeTask={handleChangeTask}
+        onDeleteTask={handleDeleteTask}
+      />
+    </>
+  );
+}
+~~~
+
+~~~jsx
+// step1 원본 코드 -> state 변경 분리
+
+/**
+* 추가
+*/
+const handleAddTask = (text) => {
+  dispatch({
+    type: 'added', // 타입은 보통 문자열 
+    id: nextId++,
+    text: text,
+  }); // dispatch 안 내용물이 action 객체
+}
+
+/*
+* task를 토글하거나 저장,
+*/
+const handleChangeTask = (task) => {
+  dispatch({
+    type: 'changed',
+    task: task
+  });
+}
+
+/**
+* 삭제
+*/
+const handleDeleteTask= (taskId) => {
+  dispatch({
+    type: 'deleted',
+    id: taskId
+  });
+}
+~~~
+
+~~~
+// step 2 리듀서 함수 작성 
+
+// 주로 두번 째 인자에 type 기재
+import { useReducer } from 'react';
+
+const  = () => {
+// state 변화함수, 초기값
+ const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+ 
+ 
+ return (...);
+}
+// task 는 state, action은 action 객체
+const tasksReducer = (tasks, action) => {
+
+ // 주로 switch문 사용 
+  switch (action.type) {
+    case 'added': {
+      return [...tasks, {
+        id: action.id,
+        text: action.text,
+        done: false
+      }];
+    }
+    case 'changed': {
+      return tasks.map(t => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case 'deleted': {
+      return tasks.filter(t => t.id !== action.id);
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+~~~
+
+~~~
+리듀스 장점: 핸들러 (setState) 코드가 비슷하다면, 코드량 줄어듬
+테스트(or 디버깅), 가독성: 코드를 파일로 분리가능, 가독성 좋아짐.
+
+리듀스는 필요한 경우에 적절히 사용합시다.
+~~~
+
+### 3-6 Context를 사용해 데이터를 깊게 전달하기
+~~~
+프롭스 드릴링을 막기위해 useContext를 활용해보자. 에대한 내용입니다.
+~~~
+
+~~~jsx
+// 1. context 생성하기
+// levelContext.tsx
+import { createContext } from 'react';
+
+export const LevelContext = createContext(1);
+~~~
+~~~jsx
+
+// 2. context 활용하기
+
+// levelContext.tsx
+import { createContext } from 'react';
+
+// heading.tsx
+export const LevelContext = createContext(1);
+
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+
+export default function Heading({ level, children }) {
+  // ...
+}
+
+// section.tsx
+import { LevelContext } from './LevelContext.js';
+
+export default function Section({ level, children }) {
+  return (
+    <section className="section"> // provider로 감싸기
+      <LevelContext.Provider value={level}>
+        {children}
+      </LevelContext.Provider>
+    </section>
+  );
+}
+~~~
+~~~
+어디서든 사용가능.
+사용 예제: 
+- 다크모드 같은 테마 지정
+-  사용자 로그인 상태
+- 라우팅
+- 상태관리
+
+mobX를 사용할때 많이 사용해본 패턴.
+~~~
+### 3-7 Reducer와 Context로 앱 확장하기
+~~~
+둘 다 사용하기. 같은내용이라 패스합니다.
+~~~
 ~~~js
 async function handleFormSubmit(e) {
   e.preventDefault();
