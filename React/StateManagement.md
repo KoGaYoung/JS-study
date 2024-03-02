@@ -248,13 +248,13 @@ const handleDeleteTask= (taskId) => {
 }
 ~~~
 
-~~~
+~~~jsx
 // step 2 리듀서 함수 작성 
 
 // 주로 두번 째 인자에 type 기재
 import { useReducer } from 'react';
 
-const  = () => {
+const TaskApp = () => {
 // state 변화함수, 초기값
  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
  
@@ -311,6 +311,7 @@ import { createContext } from 'react';
 
 export const LevelContext = createContext(1);
 ~~~
+
 ~~~jsx
 
 // 2. context 활용하기
@@ -345,7 +346,7 @@ export default function Section({ level, children }) {
 어디서든 사용가능.
 사용 예제: 
 - 다크모드 같은 테마 지정
--  사용자 로그인 상태
+- 사용자 로그인 상태
 - 라우팅
 - 상태관리
 
@@ -355,7 +356,7 @@ mobX를 사용할때 많이 사용해본 패턴.
 ~~~
 둘 다 사용하기. 같은내용이라 패스합니다.
 ~~~
-~~~js
+~~~jsx
 async function handleFormSubmit(e) {
   e.preventDefault();
   disable(textarea);
