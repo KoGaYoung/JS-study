@@ -299,6 +299,11 @@ const tasksReducer = (tasks, action) => {
 리듀스는 필요한 경우에 적절히 사용합시다.
 ~~~
 
+~~~
+스터디 이후로 알게된 사용방법: 유닛테스트 관점에서는 괜찮은것같다.
+
+~~~
+
 ### 3-6 Context를 사용해 데이터를 깊게 전달하기
 ~~~
 프롭스 드릴링을 막기위해 useContext를 활용해보자. 에대한 내용입니다.
@@ -316,32 +321,89 @@ export const LevelContext = createContext(1);
 
 // 2. context 활용하기
 
-// levelContext.tsx
+// LevelContext.tsx
 import { createContext } from 'react';
 
-// heading.tsx
 export const LevelContext = createContext(1);
+~~~
 
+~~~jsx
+// Heading.tsx
 import { useContext } from 'react';
 import { LevelContext } from './LevelContext.js';
 
-export default function Heading({ level, children }) {
-  // ...
+export default function Heading({ children }) {
+  const level = useContext(LevelContext);
+  switch (level) {
+    case 1:
+      return <h1>{children}</h1>;
+    case 2:
+      return <h2>{children}</h2>;
+    case 3:
+      return <h3>{children}</h3>;
+    case 4:
+      return <h4>{children}</h4>;
+    case 5:
+      return <h5>{children}</h5>;
+    case 6:
+      return <h6>{children}</h6>;
+    default:
+      throw Error('Unknown level: ' + level);
+  }
 }
+~~~
 
-// section.tsx
+~~~jsx
+// Section.tsx
 import { LevelContext } from './LevelContext.js';
 
 export default function Section({ level, children }) {
   return (
     <section className="section"> // provider로 감싸기
       <LevelContext.Provider value={level}>
-        {children}
+        {children} {/* Hading.tsx */
       </LevelContext.Provider>
     </section>
   );
 }
 ~~~
+
+~~~jsx
+// Page.tsx
+import Heading from './Heading.js';
+import Section from './Section.js';
+
+export default function Page() {
+  return (
+    <Section level={1}>
+      <Heading>Title</Heading>
+      <Section level={2}>
+        <Heading>Heading</Heading>
+        <Heading>Heading</Heading>
+        <Heading>Heading</Heading>
+        <Section level={3}>
+          <Heading>Sub-heading</Heading>
+          <Heading>Sub-heading</Heading>
+          <Heading>Sub-heading</Heading>
+          <Section level={4}>
+            <Heading>Sub-sub-heading</Heading>
+            <Heading>Sub-sub-heading</Heading>
+            <Heading>Sub-sub-heading</Heading>
+          </Section>
+        </Section>
+      </Section>
+    </Section>
+  );
+}
+~~~
+
+~~~
+컨택스트를 사용했을 때 최적화를 해주지 못하나요?
+부모 -> 자식 컴포넌트가
+
+프롬스 드릴링만 피할 수 있다는 장점.
+~~~
+
 ~~~
 어디서든 사용가능.
 사용 예제: 
