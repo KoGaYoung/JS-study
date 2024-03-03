@@ -86,40 +86,9 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 ### react 공홈(https://ko.react.dev/)
 
 [1. UI 표현하기](./React/UIExpression.md)
-~~~
-1-1. 첫 번째 컴포넌트
-1-2. 컴포넌트 import 및 export하기
-1-3. JSX로 마크업 작성하기
-1-4. 중괄호가 있는 JSX 안에서 자바스크립트 사용하기 
-1-5. 컴포넌트에 props 전달하기
-1-6. 조건부 렌더링
-1-7. 리스트 렌더링
-1-8. 컴포넌트를 순수하게 유지하기
-1-9. 트리거시의 UI
-1-10. 상용구형성 다하기
-~~~
 
 [2. 상호작용성 더하기](./React/AddingInteractivity.md)
-~~~
-2-1. 이벤트에 응답하기
-2-2. State: 컴포넌트의 기억 저장소
-2-3. 렌더링 그리고 컴포넌트
-2-4. 소스코드로서의 state
-2-5. State 업데이트 규칙
-2-6. 겉값 state 업데이트하기
-2-7. 바뀐 state 업데이트하기
-~~~
 
 [3. State 관리하기](./React/StateManagement.md)
-~~~
-3-1. State를 사용해 Input 다루기
-3-2. State 구조 선택하기
-3-3. 컴포넌트간 State 공유하기
-3-4. State를 보존하고 초기화하기
-3-5. State로직을 리듀서로 작성하기
-3-6. Context를 사용해 데이터를 깊게 전달하기
-3-7. Reducer와 Context로 앱 확장하기
-~~~
 
-
-
+[4. 탈출구](./React/Advanced.md)
