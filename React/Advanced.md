@@ -88,6 +88,28 @@ inputRef.current.focus();
 useRef를 여러번 사용해야하는 경우라면 render()함수 아래서 map으로 반복문 돌리지말고,
 부모 요소에 ref를 넣어 가져온 후, 
 querySelectorAll과 같은 DOM 조작 메서드로 돔 요소들을 추출해서 사용하는 것을 권장합니다.
+
+
+~~~
+~~~JSX
+// 하지만 리액트가 관리하는 (state로 연결된) 돔 노드는 ref로 변경하면 오류가 발생합니다.
+ <div>
+      {/* 2번 */}
+      <button
+        onClick={() => {
+          setShow(!show);
+        }}>
+        Toggle with setState
+      </button>
+      {/* 1번 */}
+      <button
+        onClick={() => {
+          ref.current.remove();
+        }}>
+        Remove from the DOM
+      </button>
+      {show && <p ref={ref}>Hello world</p>}
+    </div>
 ~~~
 
 ~~~
@@ -136,9 +158,40 @@ forwardRef로 다른 컴포넌트에 ref 값을 직접 넘겨본 경험이 있�
 가독성이그렇게 좋진 않았습니다. 그래서 꼭 필요할때만 쓰자고 생각했습니다.
 
 useImperativeHandle 로 forwardRef 에서 일부만 속성을 노출할 수 있도록 설정할 수 있습니다.
-
 ~~~
+~~~
+리액트의 모든 갱신은 돔을 불러오는 1.렌더링단계, 변경사항을 돔에 반영하는 2. 커밋단계로 나눌 수 있습니다.
+
+ref로 돔을 조작할 때, 리액트는 처음에 렌더링 전이므로 ref변수에 null을 부여하고
+커밋 단게에서 돔 요소를 ref 변수에 할당합니다.
+주로 이벤트 헨들러에서 ref를 조작합니다.
+~~~
+~~~
+flushSync로 state 변경을 동적으로 플러시하기
+
+(처음 보는 기능이라, 그대로 옮깁니다)
+
+
+submit()을 하면, 이벤트 핸들러를 통해 state리스트에 추가하고, scrolltoView()를 통해 스크롤을 이동시킵니다.
+// 원하는대로 동작하지 않음
+setTodos([ ...todos, newTodo]);
+listRef.current.lastChild.scrollIntoView();
+
+그런데, setState는 비동기적으로 일어나므로, 스크롤 이동이 한 아이템 적게 일어납니다.
+
+setState를 flushSync로 감싸면 동기적으로 setStaet를 실행할 수 있게됩니다.
+// 원하는대로 동작함
+flushSync(() => {
+  setTodos([ ...todos, newTodo]);
+});
+listRef.current.lastChild.scrollIntoView();
+~~~
+---
+
 # Effect로 동기화하기
+~~~
+~~~
+
 # Effect가 필요하지 않은 경우
 # React Effect의 생명주기
 # Effect에서 이벤트 분리하기
