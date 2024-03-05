@@ -269,10 +269,85 @@ return구문 안에서 취소하면됩니다.
 
 클린업을 잘 해줘야합니다!
 ~~~
+~~~js
+번외로 클린업은 Ref 변수들도 클린업을 잘 해줘야합니다. (초기값으로)
+이유는 성능때문입니다. 
+
+interface userList {
+ // 매우 복잡한 타입
+}
+
+const data = useRef<null | userList>(null);
+
+useEffect(() => { 
+   // 매우복잡한 로직
+
+   // 여기가 초기화!
+   () => data.current = null;
+, []};
+
+직접적으로 공식문서에서 ref 변수를 초기화함으로써 GC를 일어나게한다는 말은 없지만.(메모리 할당 해제)
+하지만, 불필요한 참조를 제거함으로써 GC가 수행될 가능성을 높일 수 있습니다.
+~~~
+### api 더블클릭 방지 (2번 호출 방지)
+~~~ js
+// post 요청은 가끔 보안, 기능상의 이유로 2번 신청을 프론트에서 1차적으로 걸러줘야합니다. (완벽하게 하려면 BE에서도 중복신청 방지가 들어가야겠지만요.)
+const isDoubleClick = useRef(false);
+
+const handleClick = () => {
+  // 실행중이면 리턴
+  if (isDoubleClick.current) {
+    return;
+  }
+  
+  isDoubleClick.current = true;
+
+  fetch('api/url')
+    .then(() => {
+      // 로직들..
+    })
+    .finally(() => {
+      // 여기서 해제
+      isDoubleClick.current = false;
+    });
+}
+
+<button onClick={handleClick}>클릭!</button>
+
+~~~
+
+~~~
+effect 안에서 데이터 패칭하는것에 대해 4가지 불편한 점이 있다고 공식문서에서 설명합니다.
+ssr(html을 서버에서 그림 + 클라이언트에서 js다운받아서 데이터 로드)
+csr(빈 html + js + css 클라이언트가 가져와서 html 그리고 데이터도 로드)
+
+1. ssr(서버에서 html 내려주고 사용자가 js파일 다운로드해서 데이터를 로드해야함)에서 effect는 동작하지않습니다.
+2. 네트워크 폭포를 만듭니다 : 부모 -> 자식 으로 렌더링되면서 부모가 렌더링이 일어나야 자식컴포넌트 시작되면서 그리는것 + 패칭 병렬로 할 수 있는데 무조건 탑다운으로 진행하게됨 (ssr에서는 미리 html그리기에 일부 해소됨)
+3. 매번 해당 컴포넌트를 패칭해야함: 컴포넌트가 언마운트되면 항상 다시그려야함. (특히 csr에서 추가적인 혹은 불필요한 패칭 발생)
+
+이런 경우 해결방법으로 패칭 매커니즘을 제공하는 프로덕션 수준 프레임워크(개츠비, 넥스트, 리믹스 등)를 쓰거나
+React query, swr, react router +6.4를 적용을 고려할 수 있습니다.
+Effect를 내부적으로 사용하면서 요청 중복을 제거하고 
+응답을 캐시하고 네트워크 폭포를 피하는 로직을 추가할 것입니다. 
+(데이터를 사전에 로드하거나 데이터 요구 사항을 라우트)
+~~~
+
+~~~js
+// 컴포넌트 외부에 쓸 경우, 리액트 컴포넌트 생명주기에 들어가지 않고
+// 애플리케이션 시작 시(새로고침 누르지 않는한) 1번만 실행됨을 보장합니다. (몰랐습니다..)
+
+if (typeof window !== 'undefined') { // 브라우저에서 실행 중인지 확인합니다.
+  checkAuthToken();
+  loadDataFromLocalStorage();
+}
+
+function App() {
+  // ...
+}
+~~~
 
 # Effect가 필요하지 않은 경우
 ~~~
-
 ~~~
 
 # React Effect의 생명주기
