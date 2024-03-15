@@ -352,7 +352,321 @@ function App() {
 
 # Effect가 필요하지 않은 경우
 ~~~
+Effect 역시 생명주기에서 벗어난 '탈출구'중 하나입니다.
+
+불필요한 Effect가 있는 경우를 찾아보고 제거함으로써 가독성, 속도향상, 에러가 발생할 확률을 줄일 수 있습니다.
+(여기부터는 머리속에서 Effect의 실행순서를 그림으로 그려야합니다.)
 ~~~
+
+## 불필요한 Effect를 제거하는 방법
+~~~
+렌더링 전에 데이터를 정제하고 싶을때 가능하면 Effect보다 컴포넌트 최상단에서 실행하는것을 권장합니다.
+예제는 아래 비용이 많이드는 계산 캐싱하기에서 나옵니다.
+이유는 Effect 내에서 setState 하게되면 결국 다시 컴포넌트 함수가 계산을 다시하여 라이프사이클이 돌아가기 때문입니다.
+
+사용자 동작(e.g., 필터 클릭) 으로 발생한 이벤트는 setState를 통해 업데이트 할 수 있습니다.
+굳이 State 변경 이후에 실행되는 Effect는 필요하지 않습니다.
+~~~
+
+### props 또는 state에 따라 state 업데이트하기 
+~~~js
+// 기존 props나 state에서 계산할 수 있는 것이 있으면, 그것을 state에 넣지 마세요. 대신, 렌더링 중에 계산하게 하세요.
+const [firstName, setFirstName] = useState('');
+const [lastName, setLastName] = useState('');
+
+// ✅ good
+const fullName = firstName + lastName; 
+
+// 🔴 bad
+const [fullName, setFullName] = useState('');
+useEffect(() => {
+  setFullName(firstName + ' ' + lastName);
+}, [firstName, lastName]);
+~~~
+
+### 비용이 많이드는 계산 캐싱하기
+~~~js
+// getFilteredTodos가 비용이 많이 드는 계산이라는 가정
+function TodoList({ todos, filter }) {
+  const [newTodo, setNewTodo] = useState('');
+
+  // 🔴 bad - 중복 state, 불필요한 계산
+  const [visibleTodos, setVisibleTodos] = useState([]);
+  useEffect(() => {
+    setVisibleTodos(getFilteredTodos(todos, filter));
+  }, [todos, filter]);
+
+  // ✅ good 컴포넌트 렌더링마다 실행됨
+  const visibleTodos = getFilteredTodos(todos, filter);
+
+  // ✅✅ best - todos, filter가 바뀌지 않는한 실행 안됨
+  const visibleTodos = useMemo(() => getFilteredTodos(todos, filter), [todos, filter]);
+}
+~~~
+
+### 어떤 계산이 비싼 계산인지 어떻게알아요?
+~~~js
+//  1. 콘솔로 타임체크
+console.time('filter array');
+console.timeEnd('filter array');
+
+// 2 인위적인 속도 저하로 성능
+~~~
+<img width="800" alt="image" src="../img/react_advanced1.png" />
+
+### prop 변경 시 모든 state 초기화 
+~~~js
+// 프로필 A -> 프로필 B 코멘트가 초기화 안되는 문제 
+
+// 🔴 bad: Effect에서 prop 변경 시 state 초기화
+// 다른 프로필로 옮길 때 마다 state 를 초기화시키고 리액트 렌더링을 다시함
+export default function ProfilePage({ userId }) {
+  const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    setComment('');
+  }, [userId]);
+  // ...
+}
+
+// ✅ good - key를 통해 프로필마다 다른 컴포넌트임을 인식하게 함
+export default function ProfilePage({ userId }) {
+  return (
+    <Profile
+      userId={userId}
+      key={userId}
+    />
+  );
+}
+
+function Profile({ userId }) {
+  // good: 이 state 및 아래의 다른 state는 key 변경 시 자동으로 재설정됩니다.
+  // 초기화가 필요 없어짐
+  const [comment, setComment] = useState('');
+  // ...
+}
+~~~
+
+###  props 변경 시 일부 state 만변경
+~~~js 
+function List({ items }) {
+  const [isReverse, setIsReverse] = useState(false);
+  const [selection, setSelection] = useState(null);
+
+  // 🔴 bad: Effect에서 prop 변경 시 마다 state 조정하기
+  useEffect(() => {
+    setSelection(null);
+  }, [items]);
+  // ...
+
+  // good
+  const prevItems = useRef(false); // 공홈에 굳이 state로?
+  if (items !== prevItems.current) {
+    prevItems.cuurent = items;
+    setSelection(null);
+  }
+
+  // best : 렌더링 중에 모든 것을 계산
+  const selection = items.find(item => item.id === selectedId) ?? null;
+}
+~~~
+
+### 이벤트 공유
+~~~
+Effect가 꼭 필요한게 아니라면, 그냥 함수/이벤트로 useEffect 대체가 가능함.
+컴포넌트가 사용자에게 표시되었기 때문에 실행되어야 하는 코드에만 Effect를 사용
+~~~
+~~~js
+function Form() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  // ✅ good: 컴포넌트가 표시되었으므로 이 로직이 실행됩니다. (mount 실행)
+  useEffect(() => {
+    post('/analytics/event', { eventName: 'visit_form' });
+  }, []);
+
+// 🔴 피하세요: Effect 내부의 이벤트별 로직 - 불필요한 상태값, useEffect
+  const [jsonToSubmit, setJsonToSubmit] = useState(null);
+  useEffect(() => {
+    if (jsonToSubmit !== null) {
+      post('/api/register', jsonToSubmit);
+    }
+  }, [jsonToSubmit]);
+  
+  function handleSubmit(e) {
+    e.preventDefault();
+    // ✅ good: 이벤트별 로직은 이벤트 핸들러에 있습니다. (사용자 이벤트는 해당경우 Effect 불필요)
+    post('/api/register', { firstName, lastName });
+  }
+  // ...
+}
+~~~
+
+### 연쇄계산 
+~~~js
+A state 변경 시 -> Effect에서 setState로 B 도 변경 -> Effect에서 setState로 C 도 변경
+매 변경 마다 state를 바꾸면, 그 때마다 렌더링이 일어납니다.
+
+e.g.,
+const [A, setA] = useState('');
+const [B, setB] = useState('');
+const [C, setC] = useState('');
+
+useEffect(()=> {
+  setB('something');
+},[A]);
+
+useEffect(()=> {
+  setC('something');
+},[B]);
+
+A 변경되면서 렌더링 +1번
+B 변경되면서 렌더링 +1번
+C 변경되면서 렌더링 +1번 = 총 3번
+
+=> 가능하면 컴포넌트 안에서 렌더링 되기전에 계산할 수 있는 로직을 계산해서 Effect 체인을 줄이는게 중요.
+=> 드롭다운 여러개 있는 경우, 이전 페이지에 의해 다른 내용이 fetching 되는 경우라면 어쩔 수 없이 체인이 생김
+~~~
+
+### 애플리케이션 초기화
+~~~js
+function App() {
+  // 🔴 피하세요: 한 번만 실행되어야 하는 로직이 포함된 Effect
+  useEffect(() => {
+    loadDataFromLocalStorage();
+    checkAuthToken();
+  }, []);
+  // ...
+}
+// strict 모드에서는 2번 실행됨. 
+// 운영에서는 1번만 실행되겠지만, 개발 <-> 운영 로직이 같으면 코드를 이동하고 재사용하기가 더 쉬워집니다.
+let didInit = false;
+
+function App() {
+  useEffect(() => {
+    if (!didInit) {
+      didInit = true;
+      // ✅ 앱 로드당 한 번만 실행
+      loadDataFromLocalStorage();
+      checkAuthToken();
+    }
+  }, []);
+  // ...
+}
+~~~
+
+### (중간정리)
+~~~js
+useEffect(() => {
+  // 마운트 될 때 1회 실행될 로직
+  console.log('Component did mount');
+
+  return () => {
+    // 언마운트 될 때 1회 실행될 로직
+    console.log('Component will unmount');
+  };
+}, []); // 의존성 배열이 빈 배열이기 때문에, 콜백 함수는 컴포넌트가 마운트될 때 한 번만 실행됩니다.
+// 
+~~~
+~~~
+의존성 배열이 빈 배열 일 경우 해당 컴포넌트가 
+부모로부터 받은 props, 현재 컴포넌트의 state의 변경에 대해서도 useEffect는 다시 실행되지 않습니다.
+추가로 부모가 주는 props나, 현재 컴포넌트의 state의 변경을 잡아내고싶다면 useEffect를 사용해야합니다.
+~~~
+
+### state 변경을 부모에게 알리기
+~~~
+부모로 받은 onChange 를 예시로 들법한 이벤트들 useEffect에서 props함수 실행시키기보단
+그냥 function 만들어서 props함수 실행시키는게 좋습니다.
+
+Effect 의존성 배열 데이터 변경 -> onChange 발생 -> 부모로 callback 호출 
+-> 부모로부터 새로운 onChange props받음 -> 자식 리렌더링
+~~~
+
+### 부모에게 자식 data 전닳
+~~~js
+function Parent() {
+  const [data, setData] = useState(null);
+  // ...
+  return <Child onFetched={setData} />;
+}
+
+function Child({ onFetched }) {
+  const data = useSomeAPI();
+  // 🔴 피하세요: Effect에서 부모에게 데이터 전달하기
+  useEffect(() => {
+    if (data) {
+      onFetched(data);
+    }
+  }, [onFetched, data]);
+  // ...
+}
+~~~
+~~~
+자식이 부모 state 변경시 로직이 복잡해짐 (이거 정말 자주하는 실수다. setState만 넘긴다면 자식이 부모 값 바꾸제 해줄수 있으니까)
+
+~~~
+~~~js
+function Parent() {
+  const data = useSomeAPI();
+  // ...
+  // ✅ 좋습니다: 자식에서 데이터를 전달
+  return <Child data={data} />;
+}
+
+function Child({ data }) {
+  // ...
+}
+~~~
+
+### 외부 저장소 구독하기
+~~~js
+// 내가 짜는 방법이 안좋은 예시로?
+const [isOnline, setIsOnline] = useState(true);
+
+useEffect(() => {
+  const updateState = () => {
+    setIsOnline(navigator.onLine);
+  }
+
+  updateState();
+
+  window.addEventListener('online', updateState);
+  window.addEventListener('offline', updateState);
+  return () => {
+    window.removeEventListener('online', updateState);
+    window.removeEventListener('offline', updateState);
+  };
+}, []);
+~~~
+~~~js
+function subscribe(callback) {
+  window.addEventListener('online', callback);
+  window.addEventListener('offline', callback);
+  return () => {
+    window.removeEventListener('online', callback);
+    window.removeEventListener('offline', callback);
+  };
+}
+
+function useOnlineStatus() {
+  // ✅ 좋습니다: 내장 Hook으로 외부 스토어 구독하기
+  return useSyncExternalStore(
+    subscribe, // 동일한 함수를 전달하는 한 React는 다시 구독하지 않습니다.
+    () => navigator.onLine, // 클라이언트에서 값을 얻는 방법
+    () => true // 서버에서 값을 얻는 방법
+  );
+}
+
+function ChatIndicator() {
+  const isOnline = useOnlineStatus();
+  // ...
+}
+~~~
+
+### 데이터 가져오기
+
 
 # React Effect의 생명주기
 # Effect에서 이벤트 분리하기
