@@ -676,6 +676,244 @@ function ChatIndicator() {
 ~~~
 
 # React Effect의 생명주기
+// [todo]
 # Effect에서 이벤트 분리하기
+// [todo]
+
 # Effect 의존성 제거하기
+~~~
+useEffect 의존성 배열은 지난번에 공부했던 대로,
+의존성 배열 안 값이 하나라도 변경되면 effect가 실행되게 됩니다.
+
+의존성 배열이 많으면 너무 자주 실행되거나, 무한루프를 생성할 수 있습니다.
+~~~
+~~~
+모든 팀원이 리액트 동작원리를 200% 이해하고 있는게 아니라면 린터를 씁시다.
+(빠진 props, state 의존성을 잡아줍니다)
+~~~
+### 의존성은 코드와 일치해야 합니다.
+~~~
+props로 받은 값을 useEffect에서 사용하려면 의존성 배열에 반드시 선언되어야 합니다!
+그래야 props가 변경되었을 때 effect도 동기화 할 수 있습니다.
+
+const roomId = 'music'; 가 컴포넌트 밖에 있는 같은 상수값인 경우,
+변경 될 여지가 없기에 effect 의존성에 비포함이여도 됩니다.
+~~~
+
+### 의존성을 변경하려면 코드를 변경하세요.
+~~~
+의존성 배열 갯수를 줄이고 싶다면
+Effect 내부 코드를 변경하거나, 반응형 값(props, state)등의 선언 방식을 변경합니다.
+2. Effect 의존성배열을 조정합니다.
+
+이거 밖에 없습니다.
+
+린터 키세요. 린터를 지키지 않아도 오류는 안나지만,
+모두가 리액트 동작을 완벽하게 이해하지 않는다면..(일치할리가 없어요)
+수정하다 오류발생할 위험이 기하급수적으로 늘어나기 때문에 린터키고 작업하는게 맞다고 생각됩니다.
+~~~
+~~~js
+// onTick을 자식에 전달해야할때 메모제이션 관점에서 좋으코드 
+  const [count, setCount] = useState(0);
+  const [increment, setIncrement] = useState(1);
+
+  // 의존성 배열에 추가된 함수는 useCallback으로 감싸야합니다.
+  // 그렇지 않을 경우 "렌더링 일어날 때마다 onTick 함수가 재생성, 할당됩니다"
+  const onTick = useCallback(() => {
+	setCount(currentCount => currentCount + increment);
+  },[increment]);
+
+  // Effect 내부 함수의 경우 의존성 배열에 추가되어야합니다.
+  useEffect(() => {
+    const id = setInterval(onTick, 1000);
+    return () => clearInterval(id);
+  }, [onTick]);
+~~~
+~~~js
+// onTick을 useEffect내에서만 쓸 경우
+// 의존성이 더 명확하여 이 방식을 좀 더 선호
+  const [count, setCount] = useState(0);
+  const [increment, setIncrement] = useState(1);
+
+  useEffect(() => {
+    const onTick = () => {
+	    setCount(currentCount => currentCount + increment);
+    };
+
+    const id = setInterval(onTick, 1000);
+    return () => clearInterval(id);
+  }, [increment]);
+~~~
+
+### 불필요한 의존성 제거하기
+~~~
+의존성 하나라도 변경되면 Effect가 다시실행됨.
+이게 합리적일까? --> 아니다!
+
+1. 다른조건에서 Effect의 다른 부분을 실행하고 싶을 수 있다
+= useEffect 내부소스 일부만 실행시키고 싶단 뜻 (분기처리하자..는 뜻입니다)
+2. 일부 의존성에는 반응하지않고 그저 (최신의) 값만 읽고싶을 수 있다
+(= 일부의 의존성 배열 변화에만 effect 실행)
+3. 의존성은 객체나 함수이기때문에, 자주변경될 수 있습니다.
+ (객체는 일부만 바뀌어도 바뀌었다고 인식, 함수도 재생성되면 다른 메모리주소를 가짐, 새함수로 취급됨)
+~~~
+### useEffect가 굳이 필요하지 않은경우
+~~~js
+// 이 코드 정말 effect가 필요할지?
+const [submit, setSubmit] = useEffect();
+const theme = useContext(ThemeContext);
+
+useEffect(() => {
+  if(submit) {
+    postAPI('/api/register');
+    showNotification('Successfully registered!', theme);
+  }
+}, [submit, theme])
+
+const handleSubmit = () => {
+  setSubmit(true);
+}
+~~~
+~~~js
+// 단순한 사용자 동작만 필요하다면
+// effect 지우고 필요한 데이터만 가져오기
+const theme = useContext(ThemeContext);
+
+const handleSubmit = () => {
+   postAPI('/api/register');
+   showNotification('Successfully registered!', theme);
+}
+~~~
+
+### Effect가 관련없는 작업을 이것저것 수행하나요?
+~~~
+시 -> 군 -> 구
+어떤 것을 선택하냐에 따라 보이는 값이 달라짐 (이를 계층적 데이터 구조라고합니다)
+
+나쁜예제로 시가 변경되면 군, 구를 하나의 effect에서 업데이트 하도록 하는소스
+
+사용자 동작에 따라 데이터가 선택되어야한다면
+시가 업데이트 되었을때 군을 업데이트하는것을 하나의 useEffect로
+
+군이 업데이트 되었을 때 구를 업데이트 하는 것을 또하나의 useEffect로 분할하면 좋습니다
+~~~
+
+### 다음 state를 계산하기 위해 어떤 state를 읽고있나요?
+~~~
+해당 경우는 소켓, 이벤트 리스너를 연결하여 화면의 변화(state를 변경)될 때 
+useEffect의 의존성 관리입니다.
+실제로 이 내용을 모르고 개발했을때 의존성 배열을 어떻게 관리해야할지 난감했습니다
+~~~
+~~~js
+// 🔴 asis
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    // 소켓 연결
+    const connection = createConnection();
+    connection.connect();
+    // 메시지 이벤트를 구독하고있다가, 메시지가 오면 화면 업데이트 (message 업데이트)
+    connection.on('message', (receivedMessage) => {
+      setMessages([...messages, receivedMessage]);
+    });
+    return () => connection.disconnect();
+  }, [roomId, messages]); // message 변경사항 인지! -> return 문 실행하여 연결해제 후 또다시 effect 를통해 연결
+  // ...
+~~~
+~~~js
+// ✅ tobe
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    // 소켓 연결
+    const connection = createConnection();
+    connection.connect();
+    // 메시지 이벤트를 구독하고있다가, 메시지가 오면 
+    connection.on('message', (receivedMessage) => {
+      // setMessages의 prevState인 msgs 활용하여 state 의존성 제거
+      // = state대신 내부에서 업데이터 함수를 전달해버리기
+      setMessages(msgs => [...msgs, receivedMessage]);
+    });
+    return () => connection.disconnect();
+  }, [roomId]); 
+  // ...
+~~~
+~~~js
+혹은 messages는 두고, ref 변수를 둬서 
+on event 발생 시 ref 변수를 업데이트해주는 로직으로 구현합니다.
+이때 ref변수는 Effect의존성 배열에 넣지 않아도됩니다(위에서 설명함)
+
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+  const messageRef = useRef([]);
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+
+    connection.on('message', (receivedMessage) => {
+      messages.current = receivedMessage;
+    });
+    return () => connection.disconnect();
+  }, [roomId]); 
+  // ...
+
+  useEffect(() => {
+    setMessages(messageRef.current);
+  }, [
+    // 여기에 ref값의 effect 발생조건을 겁니다.
+    messageRef.current === [] // 등등..
+  ], []); 
+~~~
+~~~js
+effect에 반응하고싶지 않은 값은 useEffectEvent로 묶어서 
+effect 밖에서 선언할 수 있습니다.
+아직 실험적인 값이라 여러 브라우저를 지원해야한다면 사용하기 어려울 것 같습니다.
+반응형부분과, 비반응형 부분으로 나눌 수있습니다.
+이 코드는 state 뿐만아니라 props에도 해당됩니다.
+
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+
+  // 비반응형 부분
+  const onMessage = useEffectEvent((receivedMessage) => {
+    setMessages(receivedMessage);
+  })
+  
+  // 반응형 부분
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+
+    connection.on('message', onMessage);
+    return () => connection.disconnect();
+  }, [roomId]); 
+  // ...
+~~~
+### 의도치않게 의존성 변경이 일어나는 경우
+~~~ js
+변치 않는 상수값은 컴포넌트 안보다 밖에 사용해야합니다.
+사용하는 곳이 useEffect 에서만이라면, option을 useEffect 내부로 옮겨도 좋습니다. (단 매번생성됨.. 크기가 크다면 아예 컴포넌트 밖이 성능상 이점이 있을 것 같습니다)
+혹은 option을 useMemo로 묶어버리는 방법도 있습니다.
+
+상수가 컴포넌트 안에 있다면 state 변경이 
+
+const Component = ({roomId}) => {
+  const [message, setMessage] = useState('');
+
+// message만 setMessage 되어도 다시 계산되면서 
+  const option = {
+    roomId,
+    serverUrl: 'url'
+  };
+
+// Effect 계속 발생함
+  useEffect(()=> {
+      // option을 사용하는 로직
+  }, [option])
+  return (
+    <input value={message} onClick={(v) = setMessage(v.target.value)} />
+  )
+}
+~~~
 # 커스텀 Hook으로 로직 재사용하기
