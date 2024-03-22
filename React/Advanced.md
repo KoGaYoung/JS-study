@@ -692,12 +692,32 @@ useEffect 의존성 배열은 지난번에 공부했던 대로,
 (빠진 props, state 의존성을 잡아줍니다)
 ~~~
 ### 의존성은 코드와 일치해야 합니다.
-~~~
+~~~js
 props로 받은 값을 useEffect에서 사용하려면 의존성 배열에 반드시 선언되어야 합니다!
 그래야 props가 변경되었을 때 effect도 동기화 할 수 있습니다.
+이 props를 반응형 값이라고합니다.
+
+type TRoomType = 'room' | 'bathroom' | 'kitchen';
+
+const Component = ({roomType: TRoomType}) => {
+	useEffect(()=> {
+		const connection = createConnection(serverUrl, roomType);
+    		connection.connect();
+    		return () => connection.disconnect();
+	},[roomType]);
+}
 
 const roomId = 'music'; 가 컴포넌트 밖에 있는 같은 상수값인 경우,
 변경 될 여지가 없기에 effect 의존성에 비포함이여도 됩니다.
+
+const roomType = 'room';
+const Component = ({}) => {
+	useEffect(()=> {
+		const connection = createConnection(serverUrl, roomType);
+    		connection.connect();
+    		return () => connection.disconnect();
+	},[]);
+}
 ~~~
 
 ### 의존성을 변경하려면 코드를 변경하세요.
@@ -707,13 +727,17 @@ Effect 내부 코드를 변경하거나, 반응형 값(props, state)등의 선�
 2. Effect 의존성배열을 조정합니다.
 
 이거 밖에 없습니다.
-
+~~~
+~~~
 린터 키세요. 린터를 지키지 않아도 오류는 안나지만,
 모두가 리액트 동작을 완벽하게 이해하지 않는다면..(일치할리가 없어요)
 수정하다 오류발생할 위험이 기하급수적으로 늘어나기 때문에 린터키고 작업하는게 맞다고 생각됩니다.
 ~~~
+~~~
+useEffect에서 함수를 잘 쓰는 방법!
+~~~
 ~~~js
-// onTick을 자식에 전달해야할때 메모제이션 관점에서 좋으코드 
+// 1️⃣'onTick을 자식에 전달해야할때' 즉 여기저기서 함수를 쓸 때 메모제이션 관점에서 좋으코드 
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
 
@@ -730,7 +754,7 @@ Effect 내부 코드를 변경하거나, 반응형 값(props, state)등의 선�
   }, [onTick]);
 ~~~
 ~~~js
-// onTick을 useEffect내에서만 쓸 경우
+// 2️⃣'onTick을 useEffect내에서만 쓸 경우'
 // 의존성이 더 명확하여 이 방식을 좀 더 선호
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
