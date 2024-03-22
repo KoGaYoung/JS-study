@@ -692,32 +692,12 @@ useEffect 의존성 배열은 지난번에 공부했던 대로,
 (빠진 props, state 의존성을 잡아줍니다)
 ~~~
 ### 의존성은 코드와 일치해야 합니다.
-~~~js
+~~~
 props로 받은 값을 useEffect에서 사용하려면 의존성 배열에 반드시 선언되어야 합니다!
 그래야 props가 변경되었을 때 effect도 동기화 할 수 있습니다.
-이 props를 반응형 값이라고합니다.
-
-type TRoomType = 'room' | 'bathroom' | 'kitchen';
-
-const Component = ({roomType: TRoomType}) => {
-	useEffect(()=> {
-		const connection = createConnection(serverUrl, roomType);
-    		connection.connect();
-    		return () => connection.disconnect();
-	},[roomType]);
-}
 
 const roomId = 'music'; 가 컴포넌트 밖에 있는 같은 상수값인 경우,
 변경 될 여지가 없기에 effect 의존성에 비포함이여도 됩니다.
-
-const roomType = 'room';
-const Component = ({}) => {
-	useEffect(()=> {
-		const connection = createConnection(serverUrl, roomType);
-    		connection.connect();
-    		return () => connection.disconnect();
-	},[]);
-}
 ~~~
 
 ### 의존성을 변경하려면 코드를 변경하세요.
@@ -727,17 +707,13 @@ Effect 내부 코드를 변경하거나, 반응형 값(props, state)등의 선�
 2. Effect 의존성배열을 조정합니다.
 
 이거 밖에 없습니다.
-~~~
-~~~
+
 린터 키세요. 린터를 지키지 않아도 오류는 안나지만,
 모두가 리액트 동작을 완벽하게 이해하지 않는다면..(일치할리가 없어요)
 수정하다 오류발생할 위험이 기하급수적으로 늘어나기 때문에 린터키고 작업하는게 맞다고 생각됩니다.
 ~~~
-~~~
-useEffect에서 함수를 잘 쓰는 방법!
-~~~
 ~~~js
-// 1️⃣'onTick을 자식에 전달해야할때' 즉 여기저기서 함수를 쓸 때 메모제이션 관점에서 좋으코드 
+// onTick을 자식에 전달해야할때 메모제이션 관점에서 좋으코드 
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
 
@@ -754,7 +730,7 @@ useEffect에서 함수를 잘 쓰는 방법!
   }, [onTick]);
 ~~~
 ~~~js
-// 2️⃣'onTick을 useEffect내에서만 쓸 경우'
+// onTick을 useEffect내에서만 쓸 경우
 // 의존성이 더 명확하여 이 방식을 좀 더 선호
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
@@ -862,15 +838,17 @@ function ChatRoom({ roomId }) {
     return () => connection.disconnect();
   }, [roomId]); 
   // ...
+}
 ~~~
 ~~~js
-혹은 messages는 두고, ref 변수를 둬서 
-on event 발생 시 ref 변수를 업데이트해주는 로직으로 구현합니다.
-이때 ref변수는 Effect의존성 배열에 넣지 않아도됩니다(위에서 설명함)
+// 혹은 messages는 두고, ref 변수를 둬서 
+// on event 발생 시 ref 변수를 업데이트해주는 로직으로 구현합니다.
+// 이때 ref변수는 Effect의존성 배열에 넣지 않아도됩니다(위에서 설명함)
 
 function ChatRoom({ roomId }) {
   const [messages, setMessages] = useState([]);
   const messageRef = useRef([]);
+
   useEffect(() => {
     const connection = createConnection();
     connection.connect();
@@ -888,44 +866,80 @@ function ChatRoom({ roomId }) {
     // 여기에 ref값의 effect 발생조건을 겁니다.
     messageRef.current === [] // 등등..
   ], []); 
+}
 ~~~
 ~~~js
-effect에 반응하고싶지 않은 값은 useEffectEvent로 묶어서 
-effect 밖에서 선언할 수 있습니다.
-아직 실험적인 값이라 여러 브라우저를 지원해야한다면 사용하기 어려울 것 같습니다.
-반응형부분과, 비반응형 부분으로 나눌 수있습니다.
-이 코드는 state 뿐만아니라 props에도 해당됩니다.
+// effect에 반응하고싶지 않은 값은 useEffectEvent로 묶어서 
+// effect 밖에서 선언할 수 있습니다.
+// 아직 실험적인 값이라 여러 브라우저를 지원해야한다면 사용하기 어려울 것 같습니다.
+// 반응형부분과, 비반응형 부분으로 나눌 수있습니다.
+// 이 코드는 아래 예의 state 뿐만아니라 props에도 해당됩니다.
 
+
+// 메세지가 왔을 때 Mute(알림)을 꺼둔게 아니면 playSound로 소리발생!
 function ChatRoom({ roomId }) {
   const [messages, setMessages] = useState([]);
+  const [isMuted, setIsMuted] = useState(false);
 
-  // 비반응형 부분
-  const onMessage = useEffectEvent((receivedMessage) => {
-    setMessages(receivedMessage);
-  })
-  
-  // 반응형 부분
+ // 비 반응형 부분
+  const onMessage = useEffectEvent(receivedMessage => {
+    setMessages(msgs => [...msgs, receivedMessage]);
+    if (!isMuted) {
+      playSound();
+    }
+  });
+
+// 반응형 부분
   useEffect(() => {
     const connection = createConnection();
     connection.connect();
-
-    connection.on('message', onMessage);
+    connection.on('message', (receivedMessage) => {
+      onMessage(receivedMessage);
+    });
     return () => connection.disconnect();
-  }, [roomId]); 
+  }, [roomId]); // ✅ All dependencies declared
   // ...
+}
+~~~
+~~~js
+// 실험적이지 않은 방법으로 바꾸기
+function ChatRoom({ roomId }) {
+  const [messages, setMessages] = useState([]);
+  const [isMuted, setIsMuted] = useState(false);
+  const isMutedRef = useRef(false);
+
+ // 비 반응형 부분
+  useEffect(() => {
+    isMutedRef.current = isMuted;
+  }, [isMuted]);
+
+// 반응형 부분
+  useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+    connection.on('message', (receivedMessage) => {
+      // isMuted 대신 isMutedRef를 참조하여 최신 상태를 확인합니다.
+      if (!isMutedRef.current) {
+        playSound();
+      }
+    });
+    return () => connection.disconnect();
+  }, [roomId]); // ✅ ref는 의존성배열에 안들어가도됩니다.
+  // ...
+}
 ~~~
 ### 의도치않게 의존성 변경이 일어나는 경우
 ~~~ js
-변치 않는 상수값은 컴포넌트 안보다 밖에 사용해야합니다.
-사용하는 곳이 useEffect 에서만이라면, option을 useEffect 내부로 옮겨도 좋습니다. (단 매번생성됨.. 크기가 크다면 아예 컴포넌트 밖이 성능상 이점이 있을 것 같습니다)
-혹은 option을 useMemo로 묶어버리는 방법도 있습니다.
+// 변치 않는 상수값은 컴포넌트 안보다 밖에 사용해야합니다.
+// 사용하는 곳이 useEffect 에서만이라면, option을 useEffect 내부로 옮겨도 좋습니다. (단 매번생성됨.. 크기가 크다면 아예 컴포넌트 밖이 성능상 이점이 있을 것 같습니다)
+// 혹은 option을 useMemo로 묶어버리는 방법도 있습니다.
 
 상수가 컴포넌트 안에 있다면 state 변경이 
 
 const Component = ({roomId}) => {
   const [message, setMessage] = useState('');
 
-// message만 setMessage 되어도 다시 계산되면서 
+// 🔴 message만 setMessage 되어도 다시 계산되면서 
   const option = {
     roomId,
     serverUrl: 'url'
@@ -939,5 +953,130 @@ const Component = ({roomId}) => {
     <input value={message} onClick={(v) = setMessage(v.target.value)} />
   )
 }
+// ✅ tobe
+  const option = useEffect(() => {
+    roomId,
+    serverUrl: 'url'
+  }, [roomId]);
 ~~~
 # 커스텀 Hook으로 로직 재사용하기
+
+~~~
+이 장은 공통된 로직을 훅으로 만들어내는 방법을 설명합니다.
+
+사용자에게 online과 offline을 알리는 소스 useOnlineStatus를 만들어 내는 방법을 설명합니다.
+
+그리고 그 공통 훅을 사용할 컴포넌트의 값만 useOnlineStatus에서 리턴하는 구조로 변경하게됩니다.
+
+
+공통적인 기능만을 단순화(추상화)하여 만드는게 커스텀 훅입니다.
+~~~
+
+~~~
+* 훅의 이름은 항상 use prefix를 사용합니다.
+* 사용자 동작 이벤트는 handle prefix
+* 부모에서 자식으로 이벤트 핸들러를 전달할때는 on prefix
+~~~
+### 커스텀 훅은 state를 공유하는게 아닌 state 저장 로직을 공유합니다.
+~~~
+두개의 컴포넌트가 같은 훅을 각각 사용한다면
+같은 state를 공유하는게 아니라
+마치 클래스에서 생성한 인스턴스처럼 각각의 State를 가지고있고,
+그 state를 업데이트 하는 로직을 공유할 뿐이라는 것 입니다.
+~~~
+
+
+### Hook 사이에 상호작용하는 값 전달하기 
+~~~
+이 부분은 커스텀 훅을 가져다 쓰는 컴포넌트와
+커스텀 훅의 동작이 어떻게 상호작용하는지 알려줍니다.
+
+커스텀 훅의 코드는 컴포넌트가 재랜더링할 때마다 다시 돌아갑니다.
+따라서 훅을 사용하는 컴포넌트의 일부라고 보아야합니다.
+~~~
+
+~~~js
+// asis
+export default function ChatRoom({ roomId }) {
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+
+  useEffect(() => {
+    const options = {
+      serverUrl: serverUrl,
+      roomId: roomId
+    };
+    const connection = createConnection(options);
+    connection.on('message', (msg) => {
+      showNotification('New message: ' + msg);
+    });
+    connection.connect();
+    return () => connection.disconnect();
+  }, [roomId, serverUrl]);
+
+  return (
+    // ...
+  )
+}
+~~~
+
+
+~~~js
+// tobe
+export function useChatRoom({ serverUrl, roomId }) {
+  useEffect(() => {
+    const options = {
+      serverUrl: serverUrl,
+      roomId: roomId
+    };
+    const connection = createConnection(options);
+    connection.connect();
+    connection.on('message', (msg) => {
+      showNotification('New message: ' + msg);
+    });
+    return () => connection.disconnect();
+  }, [roomId, serverUrl]);
+}
+
+export default function ChatRoom({ roomId }) {
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+
+  // 이렇게 변경해도 동일하게 동작합니다!
+  useChatRoom({
+    roomId,
+    serverUrl
+  });
+
+  return (
+    // ...
+  )
+}
+~~~
+
+~~~
+ChatRoom가 리랜더링이 일어날 때마다 useChatRoom 커스텀 훅에 roomId, serverUrl을 넘겨줌
+roomId, serverUrl 앖이 변경되면 계속 훅 내부의 useEffect가 재실행됨
+
+공식문서 예제에서 useEffectEvent를 적용한 케이스는
+부모로부터 전달받은 onReceiveMessage가 변경되더라도 useEffect가 실행되지 않도록 합니다.
+(useEffect 의존배열에서는 제거했으니까 실행안됨 = 비반응형 함수가 된것)
+그럼에도 onReceiveMessage(onMessage)는 최신 함수의 값을 읽게됩니다.
+~~~
+
+### 언제 커스텀 Hook을 사용해야 하는지 
+### 혹은 커스텀 Hook이 구체적인 고급 사용 사례에 집중하도록 하기
+~~~
+공통된 기능을 추상화 할때 사용
+이름을 잘 지어보기 -> 이름으로 의미와 기능 파악이 가능해야함
+~~~
+### 커스텀 Hook은 더 나은 패턴으로 변경할 수 있도록 도와줍니다. 
+~~~
+useSyncExternalStore 사용으로 더 간단하게 수정가능합니다.
+첫번째 인자는 on/off 할 함수를 만듬니다. (커스텀훅)
+두 번째 인자는 클라이언트 값을, 세번 째 인자는 서버의 값을 받아옵니다.
+
+커스텀 훅으로 Effect를 감싸는 것이 유용한 경우
+1. Effect로 데이터 흐름을 만들 때
+2. 정확한 effect 실행보다는 목적에 집중할대 
+3. 새기능 추가 시 다른컴포넌트의 변경 없이 Effect를 삭제할 수 있을때
+~~~
+
