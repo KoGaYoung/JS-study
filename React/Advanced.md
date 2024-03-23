@@ -854,7 +854,7 @@ function ChatRoom({ roomId }) {
     connection.connect();
 
     connection.on('message', (receivedMessage) => {
-      messages.current = receivedMessage;
+      messageRef.current = receivedMessage;
     });
     return () => connection.disconnect();
   }, [roomId]); 
@@ -864,8 +864,8 @@ function ChatRoom({ roomId }) {
     setMessages(messageRef.current);
   }, [
     // 여기에 ref값의 effect 발생조건을 겁니다.
-    messageRef.current === [] // 등등..
-  ], []); 
+    messageRef.current === 특정조건 // 등등..
+  ]); 
 }
 ~~~
 ~~~js
