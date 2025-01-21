@@ -92,3 +92,11 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 [3. State 관리하기](./React/StateManagement.md)
 
 [4. 탈출구](./React/Advanced.md)
+
+---
+
+## [next study]
+### next 공홈(https://nextjs.org/docs)
+
+[1. 시작하기](./Next/GettingStarted.md)
+
