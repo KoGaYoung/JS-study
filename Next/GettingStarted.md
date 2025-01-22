@@ -178,7 +178,8 @@ error.js를 넣으면 Error Boundary 랜더트리가 생성되는 구조
 <img src="https://github.com/user-attachments/assets/2c04a9f0-c45e-4a27-99d2-d7f2e6d84494" width="400px">
 
 ```tsx
-// children 대신 다른 컴포넌트가 들어갈 수 있는지? 들어간다면 어떻게 동작하는지??
+// children 대신 다른 layout 컴포넌트가 들어갈 수 있는지? 들어간다면 어떻게 동작하는지??
+// children 이 들어가는데, 랜더트리가 /blog/layout.ts가 구조상 바로 아래에 들어갈 수 있다는뜻
 export default function DashboardLayout({
   children,
 }: {
@@ -206,7 +207,18 @@ export default function DashboardLayout({
 
 
 ```tsx
-// import 경로를 보면 lib, ui 폴더가 있다는건데, lib, ui는 경로에 어떻게 포함안시켰는지?? _lib, (lib)도 아닌데
+// import 경로를 보면 lib, ui 폴더가 있다는건데, lib, ui는 경로에 어떻게 포함안시켰는지?? _lib, (lib)도 아닌데 -> page 컴포넌트없으면 어차피 경로로 인정안함ㅋㅋ
+// 이 컴포넌트는 server components임 .
+// 서버에서 렌더링에 대한 html만 클라이언트로 내려줌
+// 서버에서 getPost 실행을 다하고 html만 내려주기때문에 당연히 api가 실행되는만큼 클라이언트로 페이지보여주는데 시간은 걸리겠지만
+// nextjs가 대박인 이유는 서버컴포넌트에서 실행하는 동안에도 서스팬스 로딩을 보여줌!!
+// next js에서 fetch api를 래핑해서 캐시 기능을 넣음.
+// fetch 에서 cache를 10 분 걸어두면 10분동안은 
+// ISR(컴포넌트 캐싱)이랑은 다른개념
+// 넥스트는 서버컴포넌트를 기본으로 함. 서버컴포넌트는 html만 사용자한테 보낸다는건 번들사이즈가 줄어드는것.
+// 클라이언트사이드렌더링은 빈 html, css, js 받아와서 지지고볶고 하는데 RSC(리액트 서버컴포넌트)html 밖에 없는건 상대적으로 성능이 좋다는것
+// 가능하면 서버컴포넌트로 정적으로 만들어버리는게 좋음
+ 
 import { getPosts } from '@/lib/posts'
 import { Post } from '@/ui/post'
  
