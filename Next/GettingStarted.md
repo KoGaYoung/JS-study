@@ -14,7 +14,7 @@ What is your project named? 프로젝트 명 입력
 Would you like to use TypeScript? Yes 타입스크립트 사용
 Would you like to use ESLint? Yes ESLint 사용
 Would you like to use Tailwind CSS? Yes 서버컴포넌트에서는 Tailwind 만 지원함
-Would you like your code inside a `src/` directory? No 주요 코드를 src 폴더 하위에 배치, No 선택 시 모든 코드가 루트에 배치
+Would you like your code inside a `src/` directory? No 주요 코드를 src 폴더 하위에 배치, No 선택 시 모든 코드가 루트에 배치 (앱라우트를 쓰는경우에는 어차피 app에 소스 배치하는 전략을 쓸 수 있기때문에 굳이)
 Would you like to use App Router? (recommended) Yes 14 이후 추가된 앱라우터 적용
 Would you like to use Turbopack for `next dev`?  Yes 초고속 웹팩 대체 빌드 도구 (turbopack 은 단일레포용, turborepo는 모노레포용, npx create-turbo@latest 는 모노레포용 명령어)
 Would you like to customize the import alias (`@/*` by default)? Yes 단축구문 사용
@@ -56,7 +56,7 @@ import { Button } from '@/components/button'
 
 ### 최상위 폴더
  - app : 앱라우터
- - public : 제공될 정적 자산
+ - public : 제공될 정적 자산, public 내부에 logo.svg 올려두면 e.g., https://42dot.vsm.com/logo.svg 경로로 이미지 접근 가능 (우리는 cdn 되어있으니 https://cdn.subcription/logo 로 쓰는게 더좋음)
  - src
 <img src="https://github.com/user-attachments/assets/843cd6fc-2305-4a7e-b358-ed979be0e61c" width="400px" />
 
@@ -64,11 +64,11 @@ import { Button } from '@/components/button'
 - 애플리케이션 구성, 종속성 관리, 미들웨어 실행, 모니터링 도구 통합, 환경 변수 정의
 - next.config.js Next에 대한 구성 파일
 - instrumentation.ts request,response 추적, 사용자데이터 수집, 분석도구 통합 (OpenTelemetry를 사용하면 데이터독같은 도구로 데이터독 로깅 쉽게 가능)
-- middleware.ts Next 요청 미들웨어
-- .env 환경변수
-- .env.local 로컬환경변수
+- middleware.ts Next 요청 미들웨어(request <-> response 보낼때, 받을 때 서버단에서 인터셉터하는 것. axios 인터셉터는 클라이언트단에서 인터셉트하는거라 조금 다름)
+- .env 환경변수 (default)
+- .env.local 로컬환경변수 (최우선)
 - .env.development 개발환경변수
-- .env.production 운영환경변수
+- .env.production 운영환경변수 (node)
 - .eslintrc.json Eslintjson ESLinst 구성파일
 - next-env.d.ts Next.js에 대한 Typescript 선언 파일
 
@@ -83,14 +83,16 @@ import { Button } from '@/components/button'
 - template
 - default
 
-### 중첩된 경로 (뭔말임?)
+### 중첩된 경로 (뭔말임?? 여기서는 depth를 가져갈 수 있다는 의미)
 - folder 경로구간
 - folder/folder 중첩된 경로 세그먼트
 
-### 동적 경로
+### 동적 경로 -> 경로들을 한 번에 받아올 수 있다는 뜻
 - [folder] // e.g., { slug: string }
 - [...folder] // e.g., 	{ slug: string[] }
 - [[...folder]] // e.g., { slug?: string[] }
+
+e.g., app/blog/[productId]/[trimId]/page.js 이렇게 쓰는게 더 나아보임
 
 ```tsx
 // app/blog/[slug]/page.js
@@ -120,6 +122,14 @@ export default async function Page({
 - error.js 에러바운더리
 - loading.js 서스펜스
 - not-found.js 에러바운더리
+
+error.js를 넣으면 Error Boundary 랜더트리가 생성되는 구조
+만약에 루트에 suspense가 있는데 해당 경로에 suspense가 없으면 루트꺼까지 타고올라가서 봄
+/page.js
+/error.js
+/loading.js
+/blog/page.js
+
 <img src="https://github.com/user-attachments/assets/863f5e99-95ab-4d80-9aa6-9d22a3327f9d" width="400px"/>
 
 ## 프로젝트 구성하기
@@ -133,13 +143,13 @@ export default async function Page({
 ### 개인폴더
 - 개인 구현 세부 사항
 - 밑줄그어 만들 수 있음
-- 라우팅에서 제외됨.
+- 이 폴더 뿐만 아니라 하위폴더 전부 다 라우팅에서 제외됨.
 - e.g., _폴더명
 
 ### 경로그룹
 - 조직 목적으로 사용됨
 - 괄호로 묶어서 만들 수 있음
-- 라우팅에서 제외됨
+- 이 폴더만 라우팅에서 제외됨
 - e.g., (폴더명)
 
   
