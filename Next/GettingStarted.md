@@ -14,7 +14,7 @@ What is your project named? 프로젝트 명 입력
 Would you like to use TypeScript? Yes 타입스크립트 사용
 Would you like to use ESLint? Yes ESLint 사용
 Would you like to use Tailwind CSS? Yes 서버컴포넌트에서는 Tailwind 만 지원함
-Would you like your code inside a `src/` directory? No 주요 코드를 src 폴더 하위에 배치, No 선택 시 모든 코드가 루트에 배치
+Would you like your code inside a `src/` directory? No 주요 코드를 src 폴더 하위에 배치, No 선택 시 모든 코드가 루트에 배치
 Would you like to use App Router? (recommended) Yes 14 이후 추가된 앱라우터 적용
 Would you like to use Turbopack for `next dev`?  Yes 초고속 웹팩 대체 빌드 도구 (turbopack 은 단일레포용, turborepo는 모노레포용, npx create-turbo@latest 는 모노레포용 명령어)
 Would you like to customize the import alias (`@/*` by default)? Yes 단축구문 사용
@@ -31,7 +31,7 @@ pnpm run dev
 
 ## 최소 TypeScript 버전:v4.5.2
 
-## 린트 설정은 create-next-app로 해서 패스
+## 린트 설정은 create-next-app로 해서 패스
 
 ## 경로 별칭은 tsconfig.json 에서 설정
 ```jsx
@@ -116,7 +116,7 @@ export default async function Page({
 
 ## 구성 요소 계층
 - layout 모든 페이지에 적용되는 공통 레이아웃 설계(헤더, 네비게이션바, 푸터등을 설정)
-- page: 개별 페이지 정의(layout.tsx 파일에서 page.tsx를 명시적으로 렌더링하는 코드를 작성할 필요가 없음 Next.js가 자동으로 이를 처리)
+- page 개별 페이지 정의(layout.tsx 파일에서 page.tsx를 명시적으로 렌더링하는 코드를 작성할 필요가 없음 Next.js가 자동으로 이를 처리)
 - error.js 에러바운더리
 - loading.js 서스펜스
 - not-found.js 에러바운더리
