@@ -191,7 +191,9 @@ export default function DashboardLayout({
 - page.js는 홈 url 경로(/)
 - blog/page.js는 블로그 url 경로 (/blog)
 
+
 <img src="https://github.com/user-attachments/assets/5d4d01e1-5b77-4e14-92cf-b4598975568f" width="400px">
+
 
 ```tsx
 // import 경로를 보면 lib, ui 폴더가 있다는건데, lib, ui는 경로에 어떻게 포함안시켰는지?? _lib, (lib)도 아닌데
@@ -212,7 +214,9 @@ export default async function Page() {
 ```
 
 - 계속해서 중첩할 수 도 있음
+
 <img src="https://github.com/user-attachments/assets/90ffa10c-00eb-4b6d-aa8e-8b6fb0094ebc" width="400px">
+
 ```tsx
 function generateStaticParams() {}
  
@@ -371,8 +375,86 @@ const roboto = localFont({
 - orm 또는 db
 
 ### 클라이언트 구성 요소
+- use 훅 (리액트에 추가된 api인데 안써봄 뭔 장점?) 
+- swr, reactquery 같은 로컬라이브러리
+
+```tsx
+// swr 예제
+'use client'
+import useSWR from 'swr'
+ 
+const fetcher = (url) => fetch(url).then((r) => r.json())
+ 
+export default function BlogPage() {
+  const { data, error, isLoading } = useSWR(
+    'https://api.vercel.app/blog',
+    fetcher
+  )
+ 
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
+ 
+  return (
+    <ul>
+      {data.map((post: { id: string; title: string }) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
   
 ## 스트리밍
+- 스트리밍은 Next 15 cannary에서 도입된 플래그, dynamicIO config 옵션이 활성화 되어있다고 가정
+- 위에 플래그가 뭔지 잘 모르겟으나, 동적렌더링을 async/await 할 때 느린데이터 요청이 있는 경우 리스트 /blog/[postId] postId 1~10까지 다 차단됨
+- 초기 로드시간과 사용자 경험 개선을 위해 HTML을 청크 단위로 나누고, 청크를 점진적으로 서버에서 클라이언트로 전송 
+
+스트리밍 구현방법
+1. loading.js 파일
+2. <Suspense> 컴포넌트 사용
+
+(그냥 서스팬스 fallback 적용하는 코드같은데, 이게 청크를 나눠서 점진적으로 클라이언트 전송하는것과 직접관련있음? suspense, fallback 적용만으로는 fetch 후 state 로 들어오는건 한번에 들어올 것 같은데..)
+
+<img src="https://github.com/user-attachments/assets/fbe5ef3c-7a3e-49f6-9f5e-f12feca07440" width="400px">
+
+```tsx
+// app/blog/loading.tsx
+export default function Loading() {
+  // Define the Loading UI here
+  return <div>Loading...</div>
+}
+```
+
 # 7. 데이터 변형(Mutating Data)
+- next에서는 서버함수를 사용하여 서버로부터 받은 데이터 변형 가능 (bff 가능)
+
+## 서버 기능 생성
+- use server지시문
+- 비동기함수 맨위에 작성
+- 별도파일 생성
+- 
+```ts
+// app/actions.ts
+'use server'
+ 
+export async function createPost() {}
+```
+
+```tsx
+'use client'
+ 
+import { createPost } from '@/app/actions'
+ 
+export function Button() {
+  return <button formAction={createPost}>Create</button>
+}
+```
+
+## 서버 기능 호출
+### 양식
+### 이벤트 헨들러
+### 보류상태 표시
+### 캐시 재검증
+### 리다이렉션 중
 
 # 8. 에러핸들링(Error handling) 
