@@ -265,6 +265,9 @@ export default function BlogLayout({
 - Link API 넥스트에서 제공함
 - next에서도 react-router-dom의 navigate(history)같은 방식으로 변경하고싶다면 useRouter 사용
 ```tsx
+// 이게 개좋은이유가 개발자도구 켜놓고 보면 rsc로 페이지 이동시 doc을 받아오는게아니라
+// fetch로 서버컴포넌트의 실행결과값을 보냄
+
 import Link from 'next/link'
  
 export default async function Post({ post }) {
@@ -393,12 +396,12 @@ const roboto = localFont({
 # 6. 데이터 가져오기와 보여주기(Fetching data and streaming)
 ## 데이터 가져오기
 ### 서버 구성요소
-- fetch로 가져오기(axios도 가능한데 왜 fetch로 예시를 들어놧슬까)
+- fetch로 가져오기(axios도 가능한데 왜 fetch로 예시를 들어놧슬까 -> 서버컴포넌트는 nodejs에서 돌아간다는 뜻. xmlHttpRequest가 node엔 없고 browser에서만 쓸수있는거임)
 - orm 또는 db
 
 ### 클라이언트 구성 요소
-- use 훅 (리액트에 추가된 api인데 안써봄 뭔 장점?) 
-- swr, reactquery 같은 로컬라이브러리
+- use 훅 (리액트에 추가된 api인데 안써봄 뭔 장점? -> promise객체를 use 훅 안에 넣으면 resolve될 때까지 서스펜스해주는 것, 1회성) 
+- swr, react-query 같은 로컬라이브러리
 
 ```tsx
 // swr 예제
@@ -436,7 +439,7 @@ export default function BlogPage() {
 2. <Suspense> 컴포넌트 사용
 
 (그냥 서스팬스 fallback 적용하는 코드같은데, 이게 청크를 나눠서 점진적으로 클라이언트 전송하는것과 직접관련있음? suspense, fallback 적용만으로는 fetch 후 state 로 들어오는건 한번에 들어올 것 같은데..)
-
+(서스팬스 내부 코드(BlogList)를 서버에서 돌아서 청크로 쪼개서 주기 때문에 스트리밍이라고 하는것) 
 <img src="https://github.com/user-attachments/assets/fbe5ef3c-7a3e-49f6-9f5e-f12feca07440" width="400px">
 
 ```tsx
