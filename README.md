@@ -47,14 +47,25 @@
 
 [8. 빅인트, 부동소숫점(Numerics)](./Web/Numerics.md)
 
-[10. 최적화, 나의 생각(optimization)] ()
-ㄴ [10.1. Lazy vs @component/lodable(Code Splitting)] ()
+[10. 최적화, 나의 생각(optimization)] (순서와 중요도는 상관없음)
+
+ㄴ [10.1. Code Splitting, lazy loading] ()
 
 ㄴ [10.2. 디바운스와 스로틀링(Rate Limiting)](./Web/RateLimiting.md)
 
-ㄴ [10.3. useMemo, useCallback(메모제이션)] _react 19 리액트 컴파일러 등장으로 코드복잡도를 낮추기위해 사용하지 않음
+ㄴ [10.3 뷰포인트 밖의 영역은 intersectionObserver 활용]
 
-ㄴ [10.4. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
+ㄴ [10.4 스타일 시트와 자바스크립트는 async, defer 비동기로 불러오기]
+
+ㄴ [10.5 render가 가장 덜 나타나도록 state 범위 설정, useEffect 최소화(의존성배열 단순화)와 돔조작 피하기]
+
+ㄴ [10.6. 소켓이나 sse로 실시간 변경이 일어나는 값은 useMemo, useCallback(메모제이션)] _react 19 리액트 컴파일러 등장으로 코드복잡도를 낮추기위해 사용하지 않음
+
+ㄴ [10.7 웹팩기준 analyzer로 청크크기 보고 쪼개주기]
+
+ㄴ [10.8. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
+
+ㄴ [10.9 이미지 cdn적용]
 
 [11. 서비스 운영환경에 자동배포 구축해보기(Deployment Automation)](./Web/DeploymentAutomation.md)
 
