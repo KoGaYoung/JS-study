@@ -6,8 +6,32 @@
 코드 품질을 높일 수 있습니다 +_+
 eslint와 prettier를 설정하여 주로 문제를 해결합니다!
 
-eslint: js나 ts 문법이나 규칙에 위배되지 않는지 검사
-prettier: 줄바꿈, 스페이스 등 코딩에디터(intelliJ, vsCode)에서 일관성있게 작성하도록 도와주는 도구
+팀원마다 선호하는 에디터가 다릅니다. 아래 상황에 따라 적절하게 적용이 필요합니다.
+(모두 같은 에디터를 사용하는 경우) 에디터를 통해 설정할 수도 있고,
+(모두 다른 에디터를 사용하는 경우 ) eslintrc 파일과 prettierrc 파일을 통해 설정할 수도 있습니다.
+
+(참고, 코드에티더상의 컨벤션 우선순위가 더 높음)
+
+.eslintrc.cjs 로만 설정을 하는 방법
+IntelliJ: Settings > Languages & Frameworks > JavaScript > Code Quality Tools > ESLint에서 수동 설정
+
+VS Code
+settings.json 파일에서 ESLint 패키지를 수동으로 설정하고 ESLint 설치 경로를 지정, "eslint.workingDirectories": [{"mode": "auto"}]
+~~~
+
+~~~
+에디터별로 auto format on save 적용하기
+intellij의 경우 언어 및 프레임워크 > Javascript > 코드 품질 도구 > ESLint > 저장 시 eslint --fix 실행,
+visual studio code의 경우 auto format on save
+~~~
+
+## 기존 코드에 코딩컨벤션을 적용해야한다면?
+~~~
+순서대로 해보자.
+1. 현재 코드와 airbnb 코딩컨벤션을 비교하여 항목별로 문서화한다. js, ts, react 항목별로, 차이점은 별도기재한다
+2. 팀원들과 차이점들을 airbnb 표준에 맞출지, 현재코드로 갈지 논의한다
+3. eslintrc, prettier 파일 등에 규칙을 error로 만든다.
+4. 너무 많이 error가 발생한다면 warning으로 두고 천천히 수정하는것도 방법이다.
 ~~~
 
 ## 설정을 시작해보자
@@ -19,25 +43,13 @@ prettier: 줄바꿈, 스페이스 등 코딩에디터(intelliJ, vsCode)에서 �
 ~~~
 esLint의 경우 주로 airbnb 컨벤션을 사용합니다!
 (standard, google 등 다른 컨벤션들도 존재합니다 하지만 React, ES6에도 적용되고 사용량이 가장 많아서 에어비앤비를 추천합니다)
+그리고 보통은 프로젝트 생성하면더 eslint 적용 여부가 나와 아래 스탭은 필요하지 않습니다.
 
-1. 프로젝트 루트 디렉토리에서 elsint 설치
+1. 프로젝트 루트 디렉토리에서 eslint 설치
 npm install eslint --save-dev
-(ex. npx install eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y --save-dev)
-(타입스크립트 사용 시 npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev)
 
-2. eslint 설정 시작
+2. eslint 설정
 npx eslint --init
-
-✔ How would you like to use ESLint? · style (fix까지 해줘요)
-✔ What type of modules does your project use? · esm 
-✔ Which framework does your project use? · react
-✔ Does your project use TypeScript? · [No] / Yes (no를 해야 airbnb가 나와요)
-✔ Where does your code run? · browser
-✔ How would you like to define a style for your project? · guide
-✔ Which style guide do you want to follow? · airbnb
-✔ What format do you want your config file to be in? · JavaScript (.eslintrc파일 js확장자로)
-Checking peerDependencies of eslint-config-airbnb@latest
-The config that you've selected requires the following dependencies:
 
 eslint-config-airbnb@latest eslint@^7.32.0 || ^8.2.0 eslint-plugin-import@^2.25.3 eslint-plugin-jsx-a11y@^6.5.1 eslint-plugin-react@^7.28.0 eslint-plugin-react-hooks@^4.3.0
 ✔ Would you like to install them now? · No / [Yes]
@@ -57,6 +69,7 @@ npm install concurrently --save-dev
 "dev:lint": "concurrently \"npm run dev\" \"npm run lint\""
 
 하면 짠 하고 로컬 띄워놓고 작업하면서 바로바로 eslint 위반 조건을 볼 수 있다.
+huskey 설정을 통해 eslint 오류 해결 전까지 커밋을 못하도록 막으면 더 좋다 +_+
 -> 커밋 푸시 전에는 elsint 오류를 가능하면 전부 해결하고 올리자!
 ~~~
 <img width="945" alt="image" src="https://github.com/KoGaYoung/JS-study/assets/36693355/025f19e2-3391-4f8d-813d-1607ce227018">
