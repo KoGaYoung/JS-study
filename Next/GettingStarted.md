@@ -56,15 +56,18 @@ import { Button } from '@/components/button'
 
 ### 최상위 폴더
  - app : 앱라우터
- - public : 제공될 정적 자산, public 내부에 logo.svg 올려두면 e.g., https://42dot.vsm.com/logo.svg 경로로 이미지 접근 가능 (우리는 cdn 되어있으니 https://cdn.subcription/logo 로 쓰는게 더좋음)
+ - public : 제공될 정적 자산, public 내부에 logo.svg 올려두면 e.g., https://42dot.vsm.com/logo.svg 경로로 이미지 접근 가능
+   - 우리는 cdn 되어있으니 https://cdn.subcription/logo 로 쓰는게 더좋음
  - src
 <img src="https://github.com/user-attachments/assets/843cd6fc-2305-4a7e-b358-ed979be0e61c" width="400px" />
 
 ### 최상위 파일
 - 애플리케이션 구성, 종속성 관리, 미들웨어 실행, 모니터링 도구 통합, 환경 변수 정의
 - next.config.js Next에 대한 구성 파일
-- instrumentation.ts request,response 추적, 사용자데이터 수집, 분석도구 통합 (OpenTelemetry를 사용하면 데이터독같은 도구로 데이터독 로깅 쉽게 가능)
-- middleware.ts Next 요청 미들웨어(request <-> response 보낼때, 받을 때 서버단에서 인터셉터하는 것. axios 인터셉터는 클라이언트단에서 인터셉트하는거라 조금 다름)
+- instrumentation.ts request,response 추적, 사용자데이터 수집, 분석도구 통합
+  - OpenTelemetry를 사용하면 데이터독같은 도구로 데이터독 로깅 쉽게 가능
+- middleware.ts Next 요청 미들웨어
+  - request <-> response 보낼때, 받을 때 서버단에서 인터셉터하는 것. axios 인터셉터는 클라이언트단에서 인터셉트하는거라 조금 다름
 - .env 환경변수 (default)
 - .env.local 로컬환경변수 (최우선)
 - .env.development 개발환경변수
@@ -118,12 +121,13 @@ export default async function Page({
 
 ## 구성 요소 계층
 - layout 모든 페이지에 적용되는 공통 레이아웃 설계(헤더, 네비게이션바, 푸터등을 설정)
-- page 개별 페이지 정의(layout.tsx 파일에서 page.tsx를 명시적으로 렌더링하는 코드를 작성할 필요가 없음 Next.js가 자동으로 이를 처리)
+- page 개별 페이지 정의
+  - layout.tsx 파일에서 page.tsx를 명시적으로 렌더링하는 코드를 작성할 필요가 없음 Next.js가 자동으로 이를 처리
 - error.js 에러바운더리
 - loading.js 서스펜스
 - not-found.js 에러바운더리
 
-error.js를 넣으면 Error Boundary 랜더트리가 생성되는 구조
+error.js를 넣으면 Error Boundary 랜더트리가 생성되는 구조   
 만약에 루트에 suspense가 있는데 해당 경로에 suspense가 없으면 루트꺼까지 타고올라가서 봄
 /page.js
 /error.js
@@ -179,7 +183,8 @@ error.js를 넣으면 Error Boundary 랜더트리가 생성되는 구조
 
 ```tsx
 // children 대신 다른 layout 컴포넌트가 들어갈 수 있는지? 들어간다면 어떻게 동작하는지??
-// children 이 들어가는데, 랜더트리가 /blog/layout.ts가 구조상 바로 아래에 들어갈 수 있다는뜻
+// children 이 무조건 들어가야만 하는데, 
+// 랜더트리가 app/layout.ts 하위에 app/blog/layout.ts가 구조상 바로 아래에 들어갈 수 있다는뜻
 export default function DashboardLayout({
   children,
 }: {
@@ -198,7 +203,7 @@ export default function DashboardLayout({
 ```
 
 ## 중첩된 경로 생성
-- 공식문서에서 말하는 '중첩'은 계층(depth)을 가질 수 있다는 의미로 쓰이는것같음
+- 공식문서에서 말하는 '중첩'은 계층(depth)을 가질 수 있다는 의미로 쓰임
 - page.js는 홈 url 경로(/)
 - blog/page.js는 블로그 url 경로 (/blog)
 
@@ -207,7 +212,8 @@ export default function DashboardLayout({
 
 
 ```tsx
-// import 경로를 보면 lib, ui 폴더가 있다는건데, lib, ui는 경로에 어떻게 포함안시켰는지?? _lib, (lib)도 아닌데 -> page 컴포넌트없으면 어차피 경로로 인정안함ㅋㅋ
+// import 경로를 보면 lib, ui 폴더가 있다는건데, lib, ui는 경로에 어떻게 포함안시켰는지?? _lib, (lib)도 아닌데
+// -> page 컴포넌트없으면 어차피 경로로 인정안함ㅋㅋ
 // 이 컴포넌트는 server components임 .
 // 서버에서 렌더링에 대한 html만 클라이언트로 내려줌
 // 서버에서 getPost 실행을 다하고 html만 내려주기때문에 당연히 api가 실행되는만큼 클라이언트로 페이지보여주는데 시간은 걸리겠지만
@@ -267,6 +273,7 @@ export default function BlogLayout({
 ```tsx
 // 이게 개좋은이유가 개발자도구 켜놓고 보면 rsc로 페이지 이동시 doc을 받아오는게아니라
 // fetch로 서버컴포넌트의 실행결과값을 보냄
+// ssr이지만 csr같은 사용자 경험
 
 import Link from 'next/link'
  
@@ -396,11 +403,15 @@ const roboto = localFont({
 # 6. 데이터 가져오기와 보여주기(Fetching data and streaming)
 ## 데이터 가져오기
 ### 서버 구성요소
-- fetch로 가져오기(axios도 가능한데 왜 fetch로 예시를 들어놧슬까 -> 서버컴포넌트는 nodejs에서 돌아간다는 뜻. xmlHttpRequest가 node엔 없고 browser에서만 쓸수있는거임)
+- fetch로 가져오기
+  - axios도 가능한데 왜 fetch로 예시를 들어놧슬까
+  - -> 서버컴포넌트는 nodejs에서 돌아간다는 뜻. xmlHttpRequest가 node엔 없고 browser에서만 쓸수있는거임
 - orm 또는 db
 
 ### 클라이언트 구성 요소
-- use 훅 (리액트에 추가된 api인데 안써봄 뭔 장점? -> promise객체를 use 훅 안에 넣으면 resolve될 때까지 서스펜스해주는 것, 1회성) 
+- use 훅
+  - 리액트에 추가된 api인데 안써봄 뭔 장점?
+  - -> promise객체를 use 훅 안에 넣으면 resolve될 때까지 서스펜스해주는 것, 1회성
 - swr, react-query 같은 로컬라이브러리
 
 ```tsx
@@ -438,8 +449,9 @@ export default function BlogPage() {
 1. loading.js 파일
 2. <Suspense> 컴포넌트 사용
 
-(그냥 서스팬스 fallback 적용하는 코드같은데, 이게 청크를 나눠서 점진적으로 클라이언트 전송하는것과 직접관련있음? suspense, fallback 적용만으로는 fetch 후 state 로 들어오는건 한번에 들어올 것 같은데..)
-(서스팬스 내부 코드(BlogList)를 서버에서 돌아서 청크로 쪼개서 주기 때문에 스트리밍이라고 하는것) 
+- 그냥 서스팬스 fallback 적용하는 코드같은데, 이게 청크를 나눠서 점진적으로 클라이언트 전송하는것과 직접관련있음?
+  -  suspense, fallback 적용만으로는 fetch 후 state 로 들어오는건 한번에 들어올 것 같은데..
+  - -> 서스팬스 내부 코드(BlogList)를 서버에서 돌아서 청크로 쪼개서 주기 때문에 스트리밍이라고 하는것
 <img src="https://github.com/user-attachments/assets/fbe5ef3c-7a3e-49f6-9f5e-f12feca07440" width="400px">
 
 ```tsx
