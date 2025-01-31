@@ -18,17 +18,15 @@
 
 [9. 함수형 프로그래밍(Functional Programming)](./JS/FP.md)
 
-[10. 배열과 객체의 조작 방법](./JS/ArrayManipulate.md) _ 배열 복사와 조작에 대한 내용 추가
+[10. 배열과 객체의 조작 방법](./JS/ArrayManipulate.md)
 
 [11. 프록시(Proxy)](./JS/Proxy.md)
 
-[12.모듈 시스템 (CommonJS, ES6 Modules)](./JS/ModuleSystem.md) _보강필요
+[12.모듈 시스템 (CommonJS, ES6 Modules)](./JS/ModuleSystem.md)
 
 [13. ES5 TO ES6 변화](./JS/ES5_TO_ES6.md)
 
 [14.디자인패턴 참고하기 좋은 페이지](https://patterns-dev-kr.github.io/) 
-
-[15. CRA 안쓰고 환경 구축하기] ()
 
 ---
 
@@ -37,7 +35,7 @@
 
 [2. 브라우저 스토리지](./Web/BrowserStorage.md)
 
-[3. 브라우저라우터와 해시라우터(Routing)](./Web/Routing.md)
+[3. 브라우저라우터와 해시라우터(Routing)](./Web/Routing.md) _react router 5 -> 6/7
 
 [4. CORS](./Web/CORS.md.md)
 
@@ -49,16 +47,12 @@
 
 [8. 빅인트, 부동소숫점(Numerics)](./Web/Numerics.md)
 
-[9. 리액트 버전별 차이(리액트 복습좀하자)](./Web/ReactVersion.md)
-
-[10. 최적화, 나의 생각(optimization)] () _ 아래 url 읽어보기  
-https://kentcdodds.com/blog/usememo-and-usecallback
-
+[10. 최적화, 나의 생각(optimization)] ()
 ㄴ [10.1. Lazy vs @component/lodable(Code Splitting)] ()
 
 ㄴ [10.2. 디바운스와 스로틀링(Rate Limiting)](./Web/RateLimiting.md)
 
-ㄴ [10.3. useMemo, useCallback(Memoize)] () _주로사용처, 꼭 사용해야할까
+ㄴ [10.3. useMemo, useCallback(메모제이션)] _react 19 리액트 컴파일러 등장으로 코드복잡도를 낮추기위해 사용하지 않음
 
 ㄴ [10.4. 개발자도구 활용, 성능측정(DevTool)](./Web/DevTool.md)
 
@@ -70,9 +64,9 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 
 [15. Next.Js](./Web/NextJS.md)
 
-[17. 웹팩과 바벨 vite(BuildTools)] ()
+[17. 웹팩과 vite, turbo(BuildTools)] ()
 
-[18. Restful api, React-query, GrapQL] () _비등기프로그래밍과 같이보기
+[18. Restful api, React-query] () _비등기프로그래밍과 같이보기
 
 [19. React 상태관리, 라이프사이클 관리](./Web/React_State_LifeCycle)
 
@@ -99,4 +93,6 @@ https://kentcdodds.com/blog/usememo-and-usecallback
 ### next 공홈(https://nextjs.org/docs)
 
 [1. 시작하기](./Next/GettingStarted.md)
+
+[2. 라우팅](./Next/Routing.md)
 
