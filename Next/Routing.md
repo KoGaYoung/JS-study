@@ -366,6 +366,16 @@ module.exports = {
 };
 
 # 3. 오류처리 (Error Handling)
+오류는 예상오류와 처리되지 않은 예외 두가지로 나눠집니다.
+- 예상오류를 반환값으로 모델링: 서버사이드에서 try/catch 쓰지말고 useActionState로 클라이언트쪽에 반환시킴
+- 예상치못한 오류를 에러바운더리에 사용 : error.tsx, global-error.tsx 로 구현함
+
+## 예상 오류 처리
+예상오류는 서버사이드에서 form 양식 검증이나 실패요청같이 서비스 중 발생할 수 있는 오류입니다.
+이건 명시적으로 처리해서 클라이언트에 리턴해서 알려줘야합니다
+
+### 서버에서 예상되는 오류 처리
+useActionState를 사용하여 
 
 # 4. UI로딩 및 스트리밍 (Loading UI and Streaming)
 
