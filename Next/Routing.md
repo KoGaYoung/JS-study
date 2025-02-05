@@ -77,6 +77,7 @@ export default async function Page() {
 }
 
 // app/blog/[slug]/pages.tsx
+// generateStaticParams 가 한정되어있을 경우에 (1~5정도로) static 페이지로 만들 수 있음
 function generateStaticParams() {}
  
 export default function Page() {
@@ -129,12 +130,18 @@ export default async function Post({ post }) {
 
 
  ## 1. Link 컴포넌트 사용
-a태그를 (상속받아서) extends하여 만든 넥스트 빌트인 컴포넌트.
+a태그를 (상속받아서) extends하여 만든 넥스트 빌트인 컴포넌트.
  경로간의 클라이언트사이드 이동을 합니다.
 가장 기본적이고 권장되는 방법. 자세한 props들은 [여기](https://nextjs.org/docs/app/api-reference/components/link)
 
+링크 태그는 아마도 뷰포인트 안에 들어왔을 때 인터섹션옵저버로 프리패칭을 트리거하는 것같음 (rsc)   
+프리패칭은 html과 js만 가져와? 혹은 프리패칭되는 사이트에서 필요한 데이터(axios 호출까지) 가져와? e.g., 구독상세의 화면 html,js만 가져오는지, 구독상세데이터(DB에있는) 가져오는건지??
+
+
+
 ## 2. useRouter 훅 사용 (클라이언트 컴포넌트에서만)
 얘를 사용하면 클라이언트사이드에서 프로그래밍 방식(헨들러 에서 Js로직으로 페이지이동) 경로를 변경 할 수 있음
+
 
 ```tsx
 'use client'
@@ -186,7 +193,7 @@ export default async function Profile({
 알아두면 좋을정보)
 - redirect는 기본적으로 307(임시 리디렉션) 상태코드를 반환.
 - 서버작업에서 사용되는 경우 303(기타참조)를 반환. -> POST 요청의 결과로 성공 페이지로 리디렉션하는데 사용됨
-- 내부적으로 오류가 발생하므로 try/catch 블록 내부에서 호출
+- 리다이렉트를 감싸는 try/catch 쓰지마라.
 - 렌더링 프로세스 중에 클라이언트 구성요소에서 redirect를 호출할 수 있지만, 이벤트 헨들러에서는 호출 불가능
 - redirect 는 절대경로를 허용하며 외부 링크로 리디렉션하는데도 사용할 수 있음
 - 렌더링 프로세스 전에 리디렉션 하려면 next.config.js 또는 Middleware를 사용하세요
@@ -239,7 +246,7 @@ export function LocaleSwitcher() {
 }
 ```
 
-## 라우팅 및 탐새 작동 방식
+## 라우팅 및 탐색 작동 방식
 앱라우터는 라우팅과 이동에 하이브리드 접근방식을 사용합니다.
 서버에서 애플리케이션 코드는 자동적으로 세그먼트 단위로 코드스플릿팅됨.
 클라이언트에서 Next는 prefetch(사전패치) 하고 캐시합니다.
@@ -248,6 +255,10 @@ export function LocaleSwitcher() {
 성능과 사용성을 개선합니다.
 
 1. 코드스플릿팅 : 작은 번들 단위로 만들어짐 전송속도, 실행속도 줄어듬 (레이지로딩할때처럼)
+  서스펜스 단위로 스플릿팅이 이뤄짐 (세그먼트(경로)단위가 아니라
+  이유는 page.tsx안에도 서스팬스가 존재할 수 있기 때문
+
+
 2. 프리패칭 : 백그라운드에서 경로를 미리 로드하는 2가지 방법
 - Link 구성요소: 사용자 뷰포트에 표시되면 자동으로 사전패치됨. 
 - router.prefetch() : useRouter 후크로 사용
@@ -270,14 +281,14 @@ export default function Home() {
 
 링크는 loading.js 사용여부에 따라 동작이 다르다.
 
-loading.js가 있는 경우)
-- 프리패칭 시, 전체 페이지가 아닌 공유레이아웃(layout.tsx)까지만 가져옴
-  - 컴포넌트 트리에서 처음으로 등장하는 loading.js 까지의 레이아웃만 프리패칭됨
-  - 동적 경로 전체를 미리 가져오는 부담을 줄이고
-  - 로딩상태를 사용자에게 공유할 수 있음
+loading.js가 있는 경우)   
+- 프리패칭 시, 전체 페이지가 아닌 공유레이아웃(layout.tsx)까지만 가져옴   
+  - 컴포넌트 트리에서 처음으로 등장하는 loading.js 까지의 레이아웃만 프리패칭됨   
+  - 동적 경로 전체를 미리 가져오는 부담을 줄이고   
+  - 로딩상태를 사용자에게 공유할 수 있음   
 
-프리패칭 된 데이터는 30초 동안 캐시에 저장됨. 
-같은 링크를 30초 내에 방문하면 새로 요청하지않고 캐시된 데이터를 사용하게됨.
+프리패칭 된 데이터는 30초 동안 캐시에 저장됨.    
+같은 링크를 30초 내에 방문하면 새로 요청하지않고 캐시된 데이터를 사용하게됨   .
 
 ```
 app
@@ -289,24 +300,27 @@ app
  │   ├── page.js      (ℹ️ "/about")
  │   ├── team
  │   │   ├── page.js  (👥 "/about/team")
+ │   │   ├── layout.js (layout.js까지 가져온다는게 여기까지 가져옴)
  │   │   ├── ...
 
 ```
-사용자가 <Link href="/about/team">가 뷰포인트 내에 존재하는 화면을 보면
-about/team 페이지를 방문하기 전에 프리패칭되는 범위는?
 
-✅ app/layout.js (최상위 레이아웃)
-✅ app/about/layout.js (about 전용 레이아웃)
-❌ app/about/team/page.js → 이 부분은 미리 패칭되지 않음!
-❌ app/about/team의 실제 콘텐츠는 로드되지 않음.
+사용자가 <Link href="/about/team">가 뷰포인트 내에 존재하는 화면을 보면   
+about/team 페이지를 방문하기 전에 프리패칭되는 범위는?   
+
+✅ app/layout.js (최상위 레이아웃) -> 부분렌더링(밑에나옴)처럼 그냥 그대로둘뿐 프리패칭이아님    
+✅ app/about/layout.js (about 전용 레이아웃)  -> 부분렌더링(밑에나옴)처럼 그냥 그대로둘뿐 프리패칭이아님       
+✅ app/about/team/layout.js 여기까지 가져온다는 뜻
+❌ app/about/team/page.js → 이 부분은 미리 패칭되지 않음!   
+❌ app/about/team의 실제 콘텐츠는 로드되지 않음.   
 
 
-3. 캐싱
-Nextjs에는 Router cache라는 메모리 내 클라이언트 캐시가 있습니다.
-사용자가 프리패칭해온 경로 세그먼트와 방문한 경로의 plaload가 캐시에 저장됩니다.
+3. 캐싱   
+Nextjs에는 Router cache라는 메모리 내 클라이언트 캐시가 있습니다.   
+사용자가 프리패칭해온 경로 세그먼트와 방문한 경로의 plaload가 캐시에 저장됩니다.   
 
-4. 부분렌더링
-이동중에 변경되는 라우터 세그먼트만 다시 클라이언트에서 렌더링됨, 공유되는 부분은 보존됨.
+4. 부분렌더링   
+이동중에 변경되는 라우터 세그먼트만 다시 클라이언트에서 렌더링됨, 공유되는 부분은 보존됨.   
 
 ```
 app
@@ -321,14 +335,14 @@ app
  │   │   ├── page.js  (⚙️ "/dashboard/settings")
 ```
 
-✅ /dashboard → /dashboard/analytics로 이동하려고 
-사용자가 <Link href="/dashboard/analytics">을 클릭하면?
-🔹 렌더링이 일어나는 부분
-✅ app/dashboard/analytics/page.js (다시 렌더링됨)
+✅ /dashboard → /dashboard/analytics로 이동하려고    
+사용자가 <Link href="/dashboard/analytics">을 클릭하면?   
+🔹 렌더링이 일어나는 부분   
+✅ app/dashboard/analytics/page.js (다시 렌더링됨)   
 
-🔹 렌더링되지 않고 유지되는 부분
-🚫 app/layout.js (유지됨)
-🚫 app/dashboard/layout.js (유지됨)
+🔹 렌더링되지 않고 유지되는 부분   
+🚫 app/layout.js (유지됨)   
+🚫 app/dashboard/layout.js (유지됨)    
 
 ---
 
@@ -343,17 +357,18 @@ app
 🚫 app/layout.js (유지됨)
 🚫 app/dashboard/layout.js (유지됨)
 
-<img src="" width="400px" />
+----
 
-5. 소프트네비게이션
+5. 소프트네비게이션   
 브라우저는 페이지간 이동 시 "하드탐색" 수행
-넥스트는 "소프트탐색" 활성화해서 변경된 부분만 다시 렌더링(=4. 부분렌더링) 이를통해 react 상태보존 가능
--> 이래서 layout에 contextAPI 와같은 전역라이브러리 쓰는듯
 
-6. 뒤로 앞으로 탐색
+넥스트는 "소프트탐색" 활성화해서 변경된 부분만(= 세그먼트가 변경된 부분만) 다시 렌더링(=4. 부분렌더링) 이를통해 react 상태보존 가능   
+-> 이래서 layout에 contextAPI 와같은 전역라이브러리 쓰는듯   
+
+7. 뒤로 앞으로 탐색
 라우터 캐시에 있는 겨올 세그먼트를 재사용함
 
-7. pages와 app 사이의 라우팅
+8. pages와 app 사이의 라우팅
 pages 라우터에서 app 라우터로 갈 때 하드 탐색으로 처리한다.
 
 -> 무슨말이냐면 app안에 특정경로가 있는지 추측함. (확률적검사) 넥스트가 잘못판단하여 오류발생확률 0.01% 기본설정되있음.
