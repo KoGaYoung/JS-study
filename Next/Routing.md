@@ -391,43 +391,26 @@ app
  ├── layout.js        (🌍 최상위 레이아웃 - 모든 페이지 공통)
  ├── page.js          (🏠 "/")
  ├── dashboard
- │   ├── layout.js    (📊 대시보드 전용 레이아웃)
- │   ├── page.js      (📂 "/dashboard")
+ │   ├── layout.js    (📊 대시보드 경로 공통 UI)
+ │   ├── page.js      (📂 "/dashboard") ☑️ 현위치
  │   ├── analytics
- │   │   ├── page.js  (📈 "/dashboard/analytics")
- │   ├── settings
- │   │   ├── page.js  (⚙️ "/dashboard/settings")
+ │   │   ├── page.js  (📈 "/dashboard/analytics") ☑️ 해당 경로로 이동하면?
 ```
 
-✅ /dashboard → /dashboard/analytics로 이동하려고    
-사용자가 <Link href="/dashboard/analytics">을 클릭하면?   
+/dashboard (현위치) 경로에서 /dashboard/analytics 로 이동하면?
+
 🔹 렌더링이 일어나는 부분   
 ✅ app/dashboard/analytics/page.js (다시 렌더링됨)   
 
 🔹 렌더링되지 않고 유지되는 부분   
-🚫 app/layout.js (유지됨)   
-🚫 app/dashboard/layout.js (유지됨)    
+🚫 나머지 다! 경로 같아서 상위 레이아웃 유지됨
 
----
-
-✅ /dashboard/analytics → /dashboard/settings로 이동하려고 
-사용자가 <Link href="/dashboard/settings">을 클릭하면?
-
-🔹 렌더링이 일어나는 부분
-✅ app/dashboard/settings/page.js (다시 렌더링됨)
-
-🔹 렌더링되지 않고 유지되는 부분
-
-🚫 app/layout.js (유지됨)
-🚫 app/dashboard/layout.js (유지됨)
-
-----
 
 5. 소프트네비게이션   
 브라우저는 페이지간 이동 시 "하드탐색" 수행
 
 넥스트는 "소프트탐색" 활성화해서 변경된 부분만(= 세그먼트가 변경된 부분만) 다시 렌더링(=4. 부분렌더링) 이를통해 react 상태보존 가능   
--> 이래서 layout에 contextAPI 와같은 전역라이브러리 쓰는듯   
+-> 이래서 layout에 contextAPI 와같은 전역라이브러리 쓰는듯(2)   
 
 7. 뒤로 앞으로 탐색
 라우터 캐시에 있는 겨올 세그먼트를 재사용함
@@ -445,16 +428,148 @@ module.exports = {
 };
 
 # 3. 오류처리 (Error Handling)
-오류는 예상오류와 처리되지 않은 예외 두가지로 나눠집니다.
-- 예상오류를 반환값으로 모델링: 서버사이드에서 try/catch 쓰지말고 useActionState로 클라이언트쪽에 반환시킴
-- 예상치못한 오류를 에러바운더리에 사용 : error.tsx, global-error.tsx 로 구현함
+오류는 예상오류와 처리되지 않은 예외 두가지로 나눠집니다.   
+- 예상오류를 반환값으로 모델링: 서버사이드의 예상오류는 try/catch 쓰지말고 리액트에서 제공하는 [useActionState](https://react.dev/reference/react/useActionState)로 클라이언트쪽에 반환시킴
+- 예상치못한 오류를 에러바운더리에 사용 : error.tsx, global-error.tsx 로 구현함   
+에러는 가장 가까운걸 찾을때까지 타고 올라감 (not-found도 타고올라감)
 
 ## 예상 오류 처리
 예상오류는 서버사이드에서 form 양식 검증이나 실패요청같이 서비스 중 발생할 수 있는 오류입니다.
 이건 명시적으로 처리해서 클라이언트에 리턴해서 알려줘야합니다
 
 ### 서버에서 예상되는 오류 처리
-useActionState를 사용하여 
+useActionState를 사용하여 적절한 메시지로 처리함
+
+```tsx
+// app/actions/ts
+'use server'
+ 
+import { redirect } from 'next/navigation'
+ 
+export async function createUser(prevState: any, formData: FormData) {
+  const res = await fetch('https://...')
+  const json = await res.json()
+ 
+  if (!res.ok) {
+    return { message: 'Please enter a valid email' }
+  }
+ 
+  redirect('/dashboard') // or return '...'
+}
+
+// app/ui/signup/tsx
+'use client'
+ 
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
+ 
+const initialState = {
+  message: '',
+}
+ 
+export function Signup() {
+  const [state, formAction, pending] = useActionState(createUser, initialState)
+ 
+  return (
+    <form action={formAction}>
+      <label htmlFor="email">Email</label>
+      <input type="text" id="email" name="email" required />
+      {/* ... */}
+      <p aria-live="polite">{state?.message}</p>
+      <button disabled={pending}>Sign up</button>
+    </form>
+  )
+}
+```
+
+## 예상치못한 오류 -> error, global-error 사용
+공통으로 사용할 전역에러는 /error.js   
+특정 부분(e.g., /dashboard) 의 에러처리는 /dashboard/error.js 로   
+흔치않은 오류는 global-error.js로
+
+Next도 에러바운더리 기능을 사용하여 에러를 제어함.
+error.js를 경로에 추가하면 Error 바운더리가 생김
+
+```tsx
+app
+ ├── layout.js
+ ├── error.js
+ ├── not-found.js
+ ├── page.js
+
+<Layout>
+  <ErrorBoundary fallback={<Error />} >
+    <Suspense fallback={''} >
+      <ErrorBoundary fallback={<NotFound />} >
+        <page>
+      </ErrorBoundary>
+    </Suspense>
+  </ErrorBoundary>
+</Layout>
+```
+
+에러컴포포넌트 예제 
+```tsx
+'use client' // Error boundaries must be Client Components
+ 
+import { useEffect } from 'react'
+ 
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error)
+  }, [error])
+ 
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          // 리셋시 -> 에러 바운더리 하위 컴포넌트가 다시 렌더링됨
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+    </div>
+  )
+}
+
+```
+
+에러는 가장가까운 곳 까지 버블링됨.   
+만약 /dashboard 경로에서 에러 발생시 /dashboard/error.js를 찾음   
+
+루트경로면 루트의 error.js를 찾음   
+
+```tsx
+app
+ ├── layout.js        (🌍 최상위 레이아웃 - 모든 페이지 공통)
+ ├── error.js         (⚠️ 최상위 에러)
+ ├── dashboard
+ │   ├── layout.js    (📊 대시보드 경로 공통 UI)
+ │   ├── error.js     (⚠️ 대시보드경로 에러)
+ │   ├── page.js
+
+<Layout>                                      (🌍 최상위 레이아웃 - 모든 페이지 공통)
+  <ErrorBoundary fallback={<Error />} >       (⚠️ 최상위 에러)
+    <Layout>                                  (📊 대시보드 경로 공통 UI)
+      <ErrorBoundary fallback={<Error />} >   (⚠️ 대시보드경로 에러)
+        <page>
+      </ErrorBoundary>
+  </ErrorBoundary>
+</Layout>
+```
+ㅎ흔하진 않지만   
+다국어 처리같은경우엔
+global-error.js같은것을 사용
 
 # 4. UI로딩 및 스트리밍 (Loading UI and Streaming)
 
