@@ -16,9 +16,10 @@ export default function Page() {
 ## 레이아웃 생성
 레이아웃은 여러 페이지에서 공유되는 공통 UI 입니다.   
 페이지를 이동하면서 레이아웃은 상태를 보존하고, 상호작용을 유지하며, 다시 렌더링하지 않습니다.   
+-> 이래서 layout에 contextAPI 와같은 전역라이브러리 쓰는듯   
 
 기본적으로 React 컴포넌트를 layout에서 return 해서 레이아웃을 정의할 수 있습니다.   
-커뫂넌트는 chldren 페이지 또는 다른 레이아웃 컴포넌트가 될 수 있는 props를 허용해야합니다.   
+컴포넌트는 chldren 페이지 또는 다른 레이아웃 컴포넌트가 될 수 있는 props를 허용해야합니다.   
 
 인덱스 페이지를 자식으로 허용하는 레이아웃을 만들려면 app 디렉토리 아래에 layout 컴포넌트를 만듭니다.   
 (/app/page.tsx가 루트 경로(/)의 인덱스 페이지)   
@@ -94,8 +95,10 @@ e.g., 루트 레이아웃, 블로그 영역 레이아웃
 
 <img src="https://github.com/user-attachments/assets/630315ba-5f42-4456-8d3b-d8075dc3b74b" width="400px" />
 
-루트 레이아웃은 /page.tsx 와 /blog 둘 다를 래핑하고,
-블로그 레이아웃은 /blog/page.tsx 와 /blog/slug/page/tsx 를 래핑함.
+루트 레이아웃은 / 와 /blog 둘 다를 래핑하고,   
+블로그 레이아웃은 /blog 와 /blog/slug/ 를 래핑함.   
+(형제경로에 있는 컴포넌트들은 서로 아무런 연관이 없음)   
+(그저 세그먼트가 같은 부분은 더이상 렌더링되지않고 부분렌더링 할 뿐)   
 
 ## 페이지 간 연결
 Next에서 제공하는 Link 컴포넌트로 react-router-dom 의 기능을 함.
@@ -121,7 +124,7 @@ export default async function Post({ post }) {
 ```
 
 # 2. 연결 및 탐색 (Linking and Navigating)
-## 연결 및 탐색   
+## 이 페이지에서 설명하려는 것 (목차) : 연결 및 탐색   
 넥스트에서 경로 이동하는 방법은 네가지가 있습니다.   
 1. Link 컴포넌트 사용
 2. useRouter 훅 사용 (클라이언트 컴포넌트에서만)
@@ -130,14 +133,12 @@ export default async function Post({ post }) {
 
 
  ## 1. Link 컴포넌트 사용
-a태그를 (상속받아서) extends하여 만든 넥스트 빌트인 컴포넌트.
- 경로간의 클라이언트사이드 이동을 합니다.
-가장 기본적이고 권장되는 방법. 자세한 props들은 [여기](https://nextjs.org/docs/app/api-reference/components/link)
+a태그를 (상속받아서) extends 하여 만든 넥스트 빌트인 컴포넌트.   
+경로간의 클라이언트사이드 이동을 합니다.   
+가장 기본적이고 권장되는 방법. 자세한 props들은 [여기](https://nextjs.org/docs/app/api-reference/components/link)   
 
-링크 태그는 아마도 뷰포인트 안에 들어왔을 때 인터섹션옵저버로 프리패칭을 트리거하는 것같음 (rsc)   
-프리패칭은 html과 js만 가져와? 혹은 프리패칭되는 사이트에서 필요한 데이터(axios 호출까지) 가져와? e.g., 구독상세의 화면 html,js만 가져오는지, 구독상세데이터(DB에있는) 가져오는건지??
-
-
+링크 태그를 써서 사용자의 뷰포인트 안에 들어오면 프리패칭이 됩니다.(프리패칭은 뒤에 설명)   
+링크 태그는 a태그를 래핑하면서 아마도 뷰포인트 안에 들어왔을 때 인터섹션옵저버 등으로 프리패칭을 트리거하는 것같음 (rsc)      
 
 ## 2. useRouter 훅 사용 (클라이언트 컴포넌트에서만)
 얘를 사용하면 클라이언트사이드에서 프로그래밍 방식(헨들러 에서 Js로직으로 페이지이동) 경로를 변경 할 수 있음
@@ -160,7 +161,7 @@ export default function Page() {
 ```
 
 ## 3. redirect 함수 사용 (서버 컴포넌트에서만)
-소스먼저 보세용
+소스먼저 보세용(리디렉트는 영어식, 리다이렉트는 영국식 발음 차이일뿐 의미는 같음)
 
 ```tsx
 import { redirect } from 'next/navigation'
@@ -260,8 +261,33 @@ export function LocaleSwitcher() {
 
 
 2. 프리패칭 : 백그라운드에서 경로를 미리 로드하는 2가지 방법
-- Link 구성요소: 사용자 뷰포트에 표시되면 자동으로 사전패치됨. 
+- Link 구성요소: 사용자 뷰포트에 표시되면 자동으로 사전패치됨. ([Next 공식문서](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching) 개발자도구 키고 스크롤내려보기)
 - router.prefetch() : useRouter 후크로 사용
+
+프리패칭은 html과 js만 가져와? 혹은 프리패칭되는 사이트에서 필요한 데이터(axios 호출까지) 가져와?       
+-> JS(페이지번들) 과 HTML만 가져와   
+필요한 데이터는 페이지에 직접 들어가야 가져와.   
+서버컴포넌트인 경우에는 미리 가져올 수 있어   
+
+서버컴포넌트인 경우에   
+getStaticProps(SSG)를 통해서 /_next/data/{build-id}/about-team.json로 프리패칭 데이터를 가져감
+
+```tsx
+export async function getStaticProps() {
+  const res = await fetch("https://api.example.com/data");
+  const data = await res.json();
+
+  return { props: { data } };
+}
+```
+
+getServerSideProps(SSR)을 통해서는 데이터를 못가져가.   
+(prefetching으로는 getServerSideProps가 실행되지 않음.)
+
+클라이언트 사이드 데이터 로딩 (useEffect + axios ) 도 프리패칭하지않아.
+
+e.g., 구독상세의 화면 html,js만 가져오는지, 구독상세데이터(DB에있는) 가져오는건지??
+-> html,js만
 
 ```tsx
 import Link from 'next/link';
@@ -278,42 +304,80 @@ export default function Home() {
 }
 ```
 
+loading.js는 Next에서 제공하는 컴포넌트로,
+loading.js가 있으면, layout컴포넌트와 page컴포넌트 연결처럼,
+layout 컴포넌트와 page 컴포넌트 사이에 suspense에 자동으로 넣어준다.
+[넥스트공홈 계층구조](https://nextjs.org/docs/app/getting-started/project-structure#component-hierarchy)
+
++ loading.js가 없으면 <Suspense fallback={''} > 이렇게 씌워버린다.
+
+```
+//app
+// ├── layout.js
+// ├── loading.js 
+// ├── page.js 
+<layout>
+  <Suspense fallback={<Loading />} >
+    <Page />
+  </Suspense>
+</layout>
+```
 
 링크는 loading.js 사용여부에 따라 동작이 다르다.
 
-loading.js가 있는 경우)   
-- 프리패칭 시, 전체 페이지가 아닌 공유레이아웃(layout.tsx)까지만 가져옴   
-  - 컴포넌트 트리에서 처음으로 등장하는 loading.js 까지의 레이아웃만 프리패칭됨   
-  - 동적 경로 전체를 미리 가져오는 부담을 줄이고   
-  - 로딩상태를 사용자에게 공유할 수 있음   
+loading.js가 있으면 프리패칭은 이렇게 동작한다  
+- 로딩이 있으면 프리패칭 시, 전체 페이지가 아닌 레이아웃(layout.tsx)까지만 가져옴   
+  - 레이아웃 렌더트리 안에서도 첫번째 <suspense fallback={<Loading/} /> 가 나올때까지 렌더링함 (여기까지만 프리패칭)   
+  - 동적 경로 전체를 미리 가져오는 부담을 줄이고, 로딩상태를 사용자에게 공유할 수 있음   
 
 프리패칭 된 데이터는 30초 동안 캐시에 저장됨.    
-같은 링크를 30초 내에 방문하면 새로 요청하지않고 캐시된 데이터를 사용하게됨   .
+같은 링크를 30초 내에 방문하면 새로 요청하지않고 캐시된 데이터를 사용하게됨.   
 
-```
+
+```tsx
 app
  ├── layout.js        (🌍 최상위 레이아웃)
  ├── page.js          (🏠 "/")
  ├── about
- │   ├── loading.js   (⌛ "About" 페이지 전용 로딩 UI)
- │   ├── layout.js    (📄 "About" 페이지 전용 레이아웃)
- │   ├── page.js      (ℹ️ "/about")
+ │   ├── loading.js   (⌛ "About" 경로 공통 로딩)
+ │   ├── layout.js    (📄 "About" 경로 공통 UI)
+ │   ├── page.js      (ℹ️ "/about") ☑️ 현위치
  │   ├── team
- │   │   ├── page.js  (👥 "/about/team")
- │   │   ├── layout.js (layout.js까지 가져온다는게 여기까지 가져옴)
+ │   │   ├── loading.js  (⌛ "Team" 경로 공통 로딩)
+ │   │   ├── layout.js   (📄 "Team" 경로 공통 UI)
+ │   │   ├── page.js  (👥 "/about/team") ☑️ 해당 경로를 프리패칭 하려고함
  │   │   ├── ...
 
+사용자가 /about 경로에 위치해있을 때 
+<Link href="/about/team">가 뷰포인트 내에 존재하는 화면을 보면   
+about/team 페이지를 방문하기 전에 프리패칭되는 범위는?
+
+// /about
+<layout>                                                  (🌍 최상위 레이아웃)
+  <Suspense fallback={''} />
+    <layout>                                              (📄 "About" 경로 공통 UI)
+      <Suspense fallback={<Loading />} />                 (⌛ "About" 경로 공통 로딩)
+        <page />                                          (ℹ️ "/about") ☑️ 현위치
+      </Suspense>
+    </layout>
+  </Suspense>
+</layout>
+
+// /about/team
+<layout>                                                  (🌍 최상위 레이아웃) -> 변경점 없음 (경로가 이전과 같음)
+  <Suspense fallback={''} />                                               -> 변경점 없음 (경로가 이전과 같음)
+    <layout>                                              (📄 "About" 경로 공통 레이아웃) -> 변경점 없음 (경로가 이전과 같음)
+      <Suspense fallback={<Loading />} />                 (⌛ "About" 경로 공통 로딩 UI) -> 변경점 없음 (경로가 이전과 같음)
+        <layout>                                          (📄 "Team" 경로 공통 UI)  ⭐ 프리패칭 됨 (문서에서 말하는 공통 레이아웃)
+          <Suspense fallback={<Loading />} />             (⌛ "Team" 경로 공통 로딩) ⭐ 여기까지 프리패칭된다는 뜻!!!!
+            <page />                                      (👥 "/about/team")      ⭐ 여기는 프리패칭 되지 않음
+          </Suspense>
+        </layout>
+      </Suspense>
+    </layout>
+  </Suspense>
+</layout>
 ```
-
-사용자가 <Link href="/about/team">가 뷰포인트 내에 존재하는 화면을 보면   
-about/team 페이지를 방문하기 전에 프리패칭되는 범위는?   
-
-✅ app/layout.js (최상위 레이아웃) -> 부분렌더링(밑에나옴)처럼 그냥 그대로둘뿐 프리패칭이아님    
-✅ app/about/layout.js (about 전용 레이아웃)  -> 부분렌더링(밑에나옴)처럼 그냥 그대로둘뿐 프리패칭이아님       
-✅ app/about/team/layout.js 여기까지 가져온다는 뜻
-❌ app/about/team/page.js → 이 부분은 미리 패칭되지 않음!   
-❌ app/about/team의 실제 콘텐츠는 로드되지 않음.   
-
 
 3. 캐싱   
 Nextjs에는 Router cache라는 메모리 내 클라이언트 캐시가 있습니다.   
