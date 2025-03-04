@@ -114,5 +114,5 @@
 [4. 라우팅3주차](./Next/RoutingThird.md)   
 [4. 데이터패칭](./Next/DataFetching.md)   
 
-[5. 데이터패칭2주차](./Next/DataFetching2.md)   
+[5. 데이터패칭2주차](./Next/DataFetchingSecond.md)   
 [5. 최적화](./Next/Optimizing.md)   
