@@ -479,6 +479,7 @@ export default function ViewCount({ initialViews }: { initialViews: number }) {
 ## 2.5 Security
 Server Action이 기본적으로 공개된 HTTP 엔드포인트로 동작하기 때문에 보안에 유의해야 함   
 Next.js가 이를 보완하기 위해 제공하는 몇 가지 보안 기능에 대해 설명
+-> 'use server'를 사용하는 서버액션을 위한 파일을 만드는데, (e.g., app/action.ts) 이걸 POST 메소드로 만들어주면 Next 프레임워크에서 공개된 HTTP 엔드포인트로 만들어줌
 
 1.기본 보안 전제:   
 Server Action을 만들고 export하면, 별도로 다른 코드에서 사용하지 않더라도 공개된 HTTP 엔드포인트처럼 동작합니다.   
@@ -530,6 +531,11 @@ export function addItem() {
 클로저: 컴포넌트 내에 정의된 함수(서버 액션)가 외부 변수에 접근할 수 있는 기능.
 암호화: Next.js가 서버 액션을 안전하게 호출할 수 있도록 암호화된 ID를 생성하여 사용함.
 
+코드보면 this같은 클로저같은걸 데려온건데,
+최초에 클라이언트가 form을 받아올 때 publish()함수에서 사용하는 publishVersion도 보이진 않지만 데이터를 가져와줌
+그리고 실제 유저가 publish()를 호출했을 때 await getPublishVersion()을 통해 서버의 실시간버전을 가져올 수도 있게해줘서 두 버전을 비교할 수 있음
+
+
 ### 2.5.3 Overwriting encryption keys (advanced)
 
 ### 2.5.4 Allowed origins (advanced)
@@ -553,6 +559,10 @@ Incremental Static Regeneration (ISR)은 정적 페이지를 미리 생성해두
 (ISR)을 사용하여 블로그 게시글 페이지를 동적으로 갱신하는 방법을 보여줌
 
 첫 렌더링은 빌드 시 생성됨, 60초마다 서버에서 서버사이드 렌더링, 60초 이내 요청은 모두 같은페이지로 보여짐
+
+ISR을 쓰는게 언제일까? 하면 보통 ID를 안쓰는 admin 대시보드화면같은곳이 아닐까 싶음.
+ID는 revalidate, dynamicParams의 기능을 설명하기위해서 자꾸 ID 가져오는듯
+
 
 ```tsx
 // 블로그 게시글 데이터를 위한 타입 정의
