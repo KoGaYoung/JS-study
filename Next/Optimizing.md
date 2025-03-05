@@ -29,8 +29,10 @@ import Image from 'next/image'
 Next.js는 import된 파일을 기반으로 
 이미지의 내재된 너비(intrinsic width)와 높이(intrinsic height)를 자동으로 결정합니다.   
 이 값들은 이미지의 비율을 결정하고,   
-이미지 로딩 중 누적 레이아웃 이동(Cumulative Layout Shift)을 방지하는 데 사용됩니다.   
 
+이미지 로딩 중 누적 레이아웃 이동(Cumulative Layout Shift)을 방지하는 데 사용됩니다.   
+(갑자기 화면 와락 움직이는거)   
+=로컬 이미지는 내 로컬에있으니까 사이즈를 이미 판별해준다   
 ```tsx
 import Image from 'next/image'
 // 로컬 이미지 파일을 import 합니다.
@@ -221,13 +223,21 @@ export default function Page() {
 
 
 ## 1.5 Styling
+html 스타일 쓴다 . styled-jsx쓰지말라함. (정적이지 않기때문에)
+
+fill 쓸때는 position: relative로 써야한다
 
 ---
 
 
 ## 1.6 Examples
 ## 1.6.1 Responsive
+반응형 display :flex 수직으로 레이아웃 배치됨 
+로컬이미지는 자동계산됨
+
 ## 1.6.2 Fill Container
+로컬이미지를 fill을 써서ㅓ div relative에 맞추겠따는 뜻
+
 ## 1.6.3 Background Image
 
 ---
