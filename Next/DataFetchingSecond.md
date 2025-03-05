@@ -124,9 +124,11 @@ Next.js의 Server Actions에 대한 동작 방식과 특징
 
 - Next.js의 캐싱 및 재검증과 통합:
   - 서버 액션을 호출하면 Next.js는 업데이트된 UI와 새로운 데이터를 한 번의 서버 통신으로 받아올 수 있습니다.
+  - API 같은거라 서버에서 처리하고 다시 화면 받아오는거를 1번의 왔다갔다만으로 가능하다는 뜻으롭임
 
 - POST 방식만 허용:
   - 서버 액션은 내부적으로 POST 메서드를 사용하며, 오직 POST 방식으로만 호출할 수 있습니다.
+  - =알아서 POST 형태로 만들어준다고 이해함
 
 - 직렬화 가능한 인자와 반환값:
   - 서버 액션의 인자와 반환값은 React에서 직렬화할 수 있는 값이어야 합니다.
@@ -200,6 +202,9 @@ export function UserProfile({ userId }: { userId: string }) {
 
 예를 들어, 게시글을 작성하는 폼에서 "게시" 버튼과 "임시 저장" 버튼을 따로 만들고 싶다면,    
 각 버튼에 서로 다른 서버 액션을 지정할 수 있습니다.  
+
+여기서 확인 :    
+https://ko.react.dev/reference/react-dom/components/form
 
 ### 2.4.4 Programmatic form submission
 
