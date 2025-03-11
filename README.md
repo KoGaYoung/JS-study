@@ -116,3 +116,6 @@
 
 [5. 데이터패칭2주차](./Next/DataFetchingSecond.md)   
 [5. 최적화](./Next/Optimizing.md)   
+
+
+[6. 캐싱](./Next/Caching.md)
