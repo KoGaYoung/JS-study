@@ -119,3 +119,5 @@
 
 
 [6. 캐싱](./Next/Caching.md)
+
+[7. 인증](./Next/Authentication.md)
