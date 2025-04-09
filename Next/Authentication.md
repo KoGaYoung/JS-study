@@ -219,18 +219,21 @@ export async function signup(state: FormState, formData: FormData) {
 - 쿠키와 데이터베이스를 함께 사용하는 방식도 있음
 
 ---
-세션 관리(Session Management)   :세션 관리는 사용자가 로그인한 상태를 요청이 여러 번 오가는 동안에도 유지시켜주는 역할
+세션 관리(Session Management)   :세션 관리는 사용자가 로그인한 상태를 요청이 여러 번 오가는 동안에도 유지시켜주는 역할   
+
 - 세션 또는 토큰 생성
 - 저장
 - 갱신(리프레시)
 - 삭제
 
-	1.	무상태(Stateless) 세션
-- 브라우저의 쿠키에 저장
-- 브라우저는 요청마다 이 쿠키를 서버에 보내고, 서버는 이걸 확인해서 로그인 상태인지 판별
-- 구현간단, 상대적으로 보안취약
 
-	2.	데이터베이스 기반 세션
+
+1. 무상태(Stateless) 세션    
+- 브라우저의 쿠키에 저장(토큰, 주로 JWT)    
+- 브라우저는 요청마다 이 쿠키를 서버에 보내고, 서버는 이걸 확인해서 로그인 상태인지 판별    
+- 구현간단, 상대적으로 보안취약    
+
+2. 데이터베이스 기반 세션
 - 세션 데이터를 서버의 데이터베이스에 저장하고, 브라우저에는 암호화된 세션 ID만 전달
 - 구현이 복잡하고 서버 자원을 더 많이 사용함
 
@@ -240,11 +243,12 @@ export async function signup(state: FormState, formData: FormData) {
 
 --- 
 무상태 세션 (Stateless Sessions)
-1. 시크릿 키(secret key)를 생성해서 세션에 서명할 때 사용
-  1-1.  키는 **환경 변수(env)**로 저장
-2. 세션 데이터 암호화/복호화 로직을 작성
-3. Next.js의 cookies API를 사용해서 쿠키를 직접 관리 
-4. 갱신(refresh), 로그아웃 시에 세션을 삭제하는 기능
+1. 시크릿 키(secret key)를 생성해서 세션에 서명할 때 사용 (JWT 만드는거 얘기함)    
+  1-1.  키는 **환경 변수(env)**로 저장   
+  1-2. JWT의 헤더, 페이로드, 시그니처 로 나뉘어져있음 = 시그니처값을 시크릿키라고함   
+3. 세션 데이터 암호화/복호화 로직을 작성
+4. Next.js의 cookies API를 사용해서 쿠키를 직접 관리 
+5. 갱신(refresh), 로그아웃 시에 세션을 삭제하는 기능
 
 
 시크릿 키 생성 명령어
@@ -462,24 +466,26 @@ export async function createSession(id: number) {
 
 권한 부여(Authorization)   : 사용자가 인증을 마치고 세션이 생성된 후에는, 이제 그 사용자가 앱 내에서 어떤 작업을 할 수 있는지 제어
 
-권한 체크의 두 가지 방식
-	1.	Optimistic (낙관적 체크)
-- 브라우저의 쿠키에 저장된 세션 데이터를 기반으로   
+권한 체크의 두 가지 방식   
+
+1. Optimistic (낙관적 체크)   
+- 브라우저의 쿠키에 저장된 세션 데이터를 기반으로      
 사용자가 특정 페이지나 기능에 접근할 수 있는지 빠르게 확인
-예시:
+
+예시:   
 - 관리자 UI를 숨기거나 보여줄 때
 - 특정 역할(role)에 따라 페이지로 리디렉션할 때
 - 빠른 반응이 필요한 작업에 적합하지만, 보안 수준은 낮음
 
-2.	Secure (보안 중심 체크)
+2. Secure (보안 중심 체크)
 - 데이터베이스에 저장된 세션 정보를 기반으로 접근 권한을 확인
 
-예시:
+예시:   
 - 중요한 데이터를 가져올 때
 - 민감한 기능(예: 결제 처리)에 접근할 때
 - 더 안전한 방식이지만, 성능은 조금 느릴 수 있어요.
 
-두 방식 모두에 적용 가능한 추천 패턴
+두 방식 모두에 적용 가능한 추천 패턴   
 - **Data Access Layer (DAL)**를 만들어서 모든 권한 로직을 한 곳에 모아 관리하세요.
 - **DTO (Data Transfer Object)**를 사용해서 필요한 데이터만 클라이언트에 전달하세요.
 - 선택적으로 Middleware를 사용해서 optimistic 체크도 할 수 있음
@@ -490,14 +496,15 @@ export async function createSession(id: number) {
  DB에서 세션을 읽지 말고, 오직 쿠키에 있는 세션 정보만 읽어야함 (= 즉, Middleware에서는 “optimistic 체크만” )
 
 
-중요한 보안 검사는 데이터와 가장 가까운 곳, 즉 서버나 DB 접근 직전에 수행해야 함
-이를 위해 **Data Access Layer(DAL)**를 사용하는 것이 좋음
+중요한 보안 검사는 데이터와 가장 가까운 곳, 즉 서버나 DB 접근 직전에 수행해야 함   
+이를 위해 **Data Access Layer(DAL)**를 사용하는 것이 좋음   
 
 Data Access Layer(DAL) 만들기
 
-DAL은 데이터 요청과 권한 검증 로직을 한 곳에 모아두는 구조예요.
-이렇게 하면 코드 재사용성도 높고, 보안도 강화돼요.
-사용자의 세션을 검증하는 함수 (예: verifySession())
+DAL은 데이터 요청과 권한 검증 로직을 한 곳에 모아두는 구조예요.   
+이렇게 하면 코드 재사용성도 높고, 보안도 강화돼요.   
+사용자의 세션을 검증하는 함수 (예: verifySession())   
+
 - 세션이 유효한지 검사하고
 - 유효하지 않으면 리디렉션하거나
 - 유효하면 사용자 정보를 반환해야 해요
@@ -508,7 +515,8 @@ DAL은 데이터 요청과 권한 검증 로직을 한 곳에 모아두는 구�
  
 import { cookies } from 'next/headers'
 import { decrypt } from '@/app/lib/session'
- 
+
+// 캐싱을 통해 1회성 수행
 export const verifySession = cache(async () => {
   const cookie = (await cookies()).get('session')?.value
   const session = await decrypt(cookie)
@@ -523,22 +531,26 @@ export const verifySession = cache(async () => {
 ```
 
 그다음에는 이 verifySession() 함수를   
-다음과 같은 곳에서 호출해서 사용하면 됨
+다음과 같은 곳에서 호출해서 사용하면 됨   
+
 - 데이터 요청할 때 (예: getServerSideProps, server functions, etc)
 - Server Actions 내부에서
 - Route Handlers (app/api/ 안의 API 핸들러)
 
 
-이렇게 하면:
+이렇게 하면:   
 - 사용자 세션이 유효한지 확인하고
 - 유효하지 않다면 요청을 막거나 리디렉션 처리하고
 - 유효하다면 필요한 사용자 정보를 반환해서 다음 작업에 사용
 
 이런 흐름을 모든 서버 요청마다 일관되게 처리할 수 있음
 
+팁: 매번 검증이 필요하면 미들웨어를 써라.
+
 ```ts
 // app/lib/dal.ts
 export const getUser = cache(async () => {
+// 안에 넣는게 안놓치고 같은 세그먼트 경로에 대해서는 cache를 통해 한 번만 
   const session = await verifySession()
   if (!session) return null
  
@@ -564,13 +576,13 @@ export const getUser = cache(async () => {
 ```
 
 ---
-데이터 전송 객체 (DTO, Data Transfer Objects) 사용하기
+데이터 전송 객체 (DTO, Data Transfer Objects) 사용하기   
 
-데이터를 가져올 때는,
-애플리케이션에서 실제로 사용할 정보만 반환하는 게 좋아요.
-→ 전체 객체를 그대로 반환하는 건 피하는 게 좋습니다.
+데이터를 가져올 때는,   
+애플리케이션에서 실제로 사용할 정보만 반환하는 게 좋아요.   
+→ 전체 객체를 그대로 반환하는 건 피하는 게 좋습니다.   
 
-DTO는 보안도 지키고, 성능도 최적화하는 좋은 방법
+DTO는 보안도 지키고, 성능도 최적화하는 좋은 방법   
 
 ```ts
 // app/lib/dto.ts
@@ -604,24 +616,25 @@ export async function getProfileDTO(slug: string) {
 }
 ```
 
-데이터 요청과 권한 검사 로직을 DAL(Data Access Layer)에 모아두고,
-DTO(Data Transfer Object)를 사용해서 필요한 데이터만 전달
+데이터 요청과 권한 검사 로직을 DAL(Data Access Layer)에 모아두고,   
+DTO(Data Transfer Object)를 사용해서 필요한 데이터만 전달   
 
 ---
 
 Server Components
 
-서버 컴포넌트에서 인증(권한) 체크를 하는 건,
-특히 역할(Role)에 따라 UI를 다르게 보여줘야 할 때 매우 유용
-**관리자(admin)**는 설정 페이지를 볼 수 있고
-	•	**일반 사용자(user)**는 마이페이지만 보며
-	•	**비로그인 사용자(unauthorized)**는 아무것도 못 보는 식으로 구성
+서버 컴포넌트에서 인증(권한) 체크를 하는 건,   
+특히 역할(Role)에 따라 UI를 다르게 보여줘야 할 때 매우 유용    
+ 
+- **관리자(admin)**는 설정 페이지를 볼 수 있고   
+- **일반 사용자(user)**는 마이페이지만 보며   
+- **비로그인 사용자(unauthorized)**는 아무것도 못 보는 식으로 구성   
 
  ---
 
- 레이아웃(Layouts)에서의 인증 체크 주의사항
+레이아웃(Layouts)에서의 인증 체크 주의사항
 
- Next.js의 Partial Rendering(부분 렌더링) 때문에,
+Next.js의 Partial Rendering(부분 렌더링) 때문에,
 Layout에서 인증 체크를 할 때는 주의가 필요해요.
 
 왜냐하면:
